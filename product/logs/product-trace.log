@@ -1,0 +1,501 @@
+2022-11-18 19:40:29.471  INFO 14900 --- [main] c.s.product.ApplicationTests             : Starting ApplicationTests using Java 11.0.6 on LAPTOP-QERJ3GV7 with PID 14900 (started by wahyu in C:\Users\wahyu\Documents\Projects\Learning Kafka\learning-kafka\product)
+2022-11-18 19:40:29.473 DEBUG 14900 --- [main] c.s.product.ApplicationTests             : Running with Spring Boot v2.7.5, Spring v5.3.23
+2022-11-18 19:40:29.474  INFO 14900 --- [main] c.s.product.ApplicationTests             : The following 1 profile is active: "development"
+2022-11-18 19:40:30.627  INFO 14900 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-11-18 19:40:30.727  INFO 14900 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 81 ms. Found 1 JPA repository interfaces.
+2022-11-18 19:40:32.119  INFO 14900 --- [main] o.f.c.internal.license.VersionPrinter    : Flyway Community Edition 8.5.13 by Redgate
+2022-11-18 19:40:32.119  INFO 14900 --- [main] o.f.c.internal.license.VersionPrinter    : See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2022-11-18 19:40:32.119  INFO 14900 --- [main] o.f.c.internal.license.VersionPrinter    : 
+2022-11-18 19:40:32.123 DEBUG 14900 --- [main] o.f.core.internal.util.FeatureDetector   : AWS SDK available: false
+2022-11-18 19:40:32.124 DEBUG 14900 --- [main] o.f.core.internal.util.FeatureDetector   : Google Cloud Storage available: false
+2022-11-18 19:40:32.125 DEBUG 14900 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning for classpath resources at 'classpath:db/callback' ...
+2022-11-18 19:40:32.125 DEBUG 14900 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Determining location urls for classpath:db/callback using ClassLoader jdk.internal.loader.ClassLoaders$AppClassLoader@2cdf8d8a ...
+2022-11-18 19:40:32.125 DEBUG 14900 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Unable to resolve location classpath:db/callback.
+2022-11-18 19:40:32.125 DEBUG 14900 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning for classpath resources at 'classpath:db/migrations/h2' ...
+2022-11-18 19:40:32.125 DEBUG 14900 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Determining location urls for classpath:db/migrations/h2 using ClassLoader jdk.internal.loader.ClassLoaders$AppClassLoader@2cdf8d8a ...
+2022-11-18 19:40:32.126 DEBUG 14900 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Unable to resolve location classpath:db/migrations/h2.
+2022-11-18 19:40:32.127 DEBUG 14900 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning for classes at classpath:db/migrations/h2
+2022-11-18 19:40:32.435  INFO 14900 --- [main] o.f.c.i.database.base.BaseDatabaseType   : Database: jdbc:h2:mem:db_product (H2 2.1)
+2022-11-18 19:40:32.436 DEBUG 14900 --- [main] o.f.c.i.database.base.BaseDatabaseType   : Driver  : H2 JDBC Driver 2.1.214 (2022-06-13)
+2022-11-18 19:40:32.560 DEBUG 14900 --- [main] org.flywaydb.core.FlywayExecutor         : DDL Transactions Supported: false
+2022-11-18 19:40:32.561 DEBUG 14900 --- [main] o.f.c.i.s.SchemaHistoryFactory           : Schemas: 
+2022-11-18 19:40:32.562 DEBUG 14900 --- [main] o.f.c.i.s.SchemaHistoryFactory           : Default schema: null
+2022-11-18 19:40:32.568  WARN 14900 --- [main] o.f.c.internal.database.base.Database    : Flyway upgrade recommended: H2 2.1.214 is newer than this version of Flyway and support has not been tested. The latest supported version of H2 is 2.1.210.
+2022-11-18 19:40:32.570 DEBUG 14900 --- [main] o.f.c.i.c.SqlScriptCallbackFactory       : Scanning for SQL callbacks ...
+2022-11-18 19:40:32.581 DEBUG 14900 --- [main] o.f.core.internal.command.DbValidate     : Validating migrations ...
+2022-11-18 19:40:32.589  INFO 14900 --- [main] o.f.core.internal.command.DbValidate     : Successfully validated 0 migrations (execution time 00:00.006s)
+2022-11-18 19:40:32.589  WARN 14900 --- [main] o.f.core.internal.command.DbValidate     : No migrations found. Are your locations set up correctly?
+2022-11-18 19:40:32.596 DEBUG 14900 --- [main] o.f.core.internal.command.DbSchemas      : Skipping creation of existing schema: "PUBLIC"
+2022-11-18 19:40:32.598  INFO 14900 --- [main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "PUBLIC"."flyway_schema_history" ...
+2022-11-18 19:40:32.605 DEBUG 14900 --- [main] o.flywaydb.core.internal.parser.Parser   : Parsing  ...
+2022-11-18 19:40:32.613 DEBUG 14900 --- [main] o.f.c.i.sqlscript.ParserSqlScript        : Found statement at line 1: CREATE TABLE IF NOT EXISTS "PUBLIC"."flyway_schema_history" (
+    "installed_rank" INT NOT NULL,
+    "version" VARCHAR(50),
+    "description" VARCHAR(200) NOT NULL,
+    "type" VARCHAR(20) NOT NULL,
+    "script" VARCHAR(1000) NOT NULL,
+    "checksum" INT,
+    "installed_by" VARCHAR(100) NOT NULL,
+    "installed_on" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "execution_time" INT NOT NULL,
+    "success" BOOLEAN NOT NULL,
+    CONSTRAINT "flyway_schema_history_pk" PRIMARY KEY ("installed_rank")
+) AS SELECT -1, NULL, '<< Flyway Schema History table created >>', 'TABLE', '', NULL, 'ADMIN', CURRENT_TIMESTAMP, 0, TRUE
+2022-11-18 19:40:32.613 DEBUG 14900 --- [main] o.f.c.i.sqlscript.ParserSqlScript        : Found statement at line 14: CREATE INDEX "PUBLIC"."flyway_schema_history_s_idx" ON "PUBLIC"."flyway_schema_history" ("success")
+2022-11-18 19:40:32.615 DEBUG 14900 --- [main] o.f.c.i.s.DefaultSqlScriptExecutor       : Executing SQL: CREATE TABLE IF NOT EXISTS "PUBLIC"."flyway_schema_history" (
+    "installed_rank" INT NOT NULL,
+    "version" VARCHAR(50),
+    "description" VARCHAR(200) NOT NULL,
+    "type" VARCHAR(20) NOT NULL,
+    "script" VARCHAR(1000) NOT NULL,
+    "checksum" INT,
+    "installed_by" VARCHAR(100) NOT NULL,
+    "installed_on" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "execution_time" INT NOT NULL,
+    "success" BOOLEAN NOT NULL,
+    CONSTRAINT "flyway_schema_history_pk" PRIMARY KEY ("installed_rank")
+) AS SELECT -1, NULL, '<< Flyway Schema History table created >>', 'TABLE', '', NULL, 'ADMIN', CURRENT_TIMESTAMP, 0, TRUE
+2022-11-18 19:40:32.623 DEBUG 14900 --- [main] o.f.c.i.s.DefaultSqlScriptExecutor       : 0 rows affected
+2022-11-18 19:40:32.624 DEBUG 14900 --- [main] o.f.c.i.s.DefaultSqlScriptExecutor       : Executing SQL: CREATE INDEX "PUBLIC"."flyway_schema_history_s_idx" ON "PUBLIC"."flyway_schema_history" ("success")
+2022-11-18 19:40:32.626 DEBUG 14900 --- [main] o.f.c.i.s.DefaultSqlScriptExecutor       : 0 rows affected
+2022-11-18 19:40:32.626 DEBUG 14900 --- [main] o.f.c.i.s.JdbcTableSchemaHistory         : Created Schema History table "PUBLIC"."flyway_schema_history"
+2022-11-18 19:40:32.632  INFO 14900 --- [main] o.f.core.internal.command.DbMigrate      : Current version of schema "PUBLIC": << Empty Schema >>
+2022-11-18 19:40:32.633  INFO 14900 --- [main] o.f.core.internal.command.DbMigrate      : Schema "PUBLIC" is up to date. No migration necessary.
+2022-11-18 19:40:32.635 DEBUG 14900 --- [main] org.flywaydb.core.FlywayExecutor         : Memory usage: 30 of 152M
+2022-11-18 19:40:32.840  INFO 14900 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-11-18 19:40:32.864  INFO 14900 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-11-18 19:40:32.956  INFO 14900 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-11-18 19:40:33.075  INFO 14900 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.12.Final
+2022-11-18 19:40:33.311  INFO 14900 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-11-18 19:40:33.799  INFO 14900 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2022-11-18 19:40:34.418  INFO 14900 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-11-18 19:40:34.427  INFO 14900 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-11-18 19:40:35.318  WARN 14900 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-11-18 19:40:35.695  INFO 14900 --- [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-ui'. Database available at 'jdbc:h2:mem:db_product'
+2022-11-18 19:40:36.220  INFO 14900 --- [main] c.s.product.ApplicationTests             : Started ApplicationTests in 7.271 seconds (JVM running for 8.669)
+2022-11-18 19:40:36.412  INFO 14900 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-11-18 19:40:36.413  INFO 14900 --- [SpringApplicationShutdownHook] .SchemaDropperImpl$DelayedDropActionImpl : HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+2022-11-18 19:40:36.639  INFO 14900 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-11-18 19:40:36.652  INFO 14900 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-11-18 19:54:10.109  INFO 10640 --- [main] com.softlaboratory.product.Application   : Starting Application using Java 11.0.6 on LAPTOP-QERJ3GV7 with PID 10640 (C:\Users\wahyu\Documents\Projects\Learning Kafka\learning-kafka\product\target\classes started by wahyu in C:\Users\wahyu\Documents\Projects\Learning Kafka\learning-kafka\product)
+2022-11-18 19:54:10.112 DEBUG 10640 --- [main] com.softlaboratory.product.Application   : Running with Spring Boot v2.7.5, Spring v5.3.23
+2022-11-18 19:54:10.113  INFO 10640 --- [main] com.softlaboratory.product.Application   : The following 1 profile is active: "development"
+2022-11-18 19:54:10.928  INFO 10640 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-11-18 19:54:11.001  INFO 10640 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 59 ms. Found 1 JPA repository interfaces.
+2022-11-18 19:54:12.134  INFO 10640 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 5001 (http)
+2022-11-18 19:54:12.147  INFO 10640 --- [main] o.a.coyote.http11.Http11NioProtocol      : Initializing ProtocolHandler ["http-nio-5001"]
+2022-11-18 19:54:12.147  INFO 10640 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-11-18 19:54:12.148  INFO 10640 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.68]
+2022-11-18 19:54:12.478  INFO 10640 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2022-11-18 19:54:12.479  INFO 10640 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2297 ms
+2022-11-18 19:54:12.529  INFO 10640 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-11-18 19:54:12.850  INFO 10640 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-11-18 19:54:12.866  INFO 10640 --- [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-ui'. Database available at 'jdbc:h2:mem:db_product'
+2022-11-18 19:54:13.078  INFO 10640 --- [main] o.f.c.internal.license.VersionPrinter    : Flyway Community Edition 8.5.13 by Redgate
+2022-11-18 19:54:13.079  INFO 10640 --- [main] o.f.c.internal.license.VersionPrinter    : See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2022-11-18 19:54:13.081  INFO 10640 --- [main] o.f.c.internal.license.VersionPrinter    : 
+2022-11-18 19:54:13.088 DEBUG 10640 --- [main] o.f.core.internal.util.FeatureDetector   : AWS SDK available: false
+2022-11-18 19:54:13.089 DEBUG 10640 --- [main] o.f.core.internal.util.FeatureDetector   : Google Cloud Storage available: false
+2022-11-18 19:54:13.090 DEBUG 10640 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning for classpath resources at 'classpath:db/callback' ...
+2022-11-18 19:54:13.090 DEBUG 10640 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Determining location urls for classpath:db/callback using ClassLoader jdk.internal.loader.ClassLoaders$AppClassLoader@368239c8 ...
+2022-11-18 19:54:13.090 DEBUG 10640 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Unable to resolve location classpath:db/callback.
+2022-11-18 19:54:13.090 DEBUG 10640 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning for classpath resources at 'classpath:db/migrations/h2' ...
+2022-11-18 19:54:13.090 DEBUG 10640 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Determining location urls for classpath:db/migrations/h2 using ClassLoader jdk.internal.loader.ClassLoaders$AppClassLoader@368239c8 ...
+2022-11-18 19:54:13.091 DEBUG 10640 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Unable to resolve location classpath:db/migrations/h2.
+2022-11-18 19:54:13.091 DEBUG 10640 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning for classes at classpath:db/migrations/h2
+2022-11-18 19:54:13.109  INFO 10640 --- [main] o.f.c.i.database.base.BaseDatabaseType   : Database: jdbc:h2:mem:db_product (H2 2.1)
+2022-11-18 19:54:13.109 DEBUG 10640 --- [main] o.f.c.i.database.base.BaseDatabaseType   : Driver  : H2 JDBC Driver 2.1.214 (2022-06-13)
+2022-11-18 19:54:13.150 DEBUG 10640 --- [main] org.flywaydb.core.FlywayExecutor         : DDL Transactions Supported: false
+2022-11-18 19:54:13.152 DEBUG 10640 --- [main] o.f.c.i.s.SchemaHistoryFactory           : Schemas: 
+2022-11-18 19:54:13.152 DEBUG 10640 --- [main] o.f.c.i.s.SchemaHistoryFactory           : Default schema: null
+2022-11-18 19:54:13.159  WARN 10640 --- [main] o.f.c.internal.database.base.Database    : Flyway upgrade recommended: H2 2.1.214 is newer than this version of Flyway and support has not been tested. The latest supported version of H2 is 2.1.210.
+2022-11-18 19:54:13.161 DEBUG 10640 --- [main] o.f.c.i.c.SqlScriptCallbackFactory       : Scanning for SQL callbacks ...
+2022-11-18 19:54:13.172 DEBUG 10640 --- [main] o.f.core.internal.command.DbValidate     : Validating migrations ...
+2022-11-18 19:54:13.180  INFO 10640 --- [main] o.f.core.internal.command.DbValidate     : Successfully validated 0 migrations (execution time 00:00.007s)
+2022-11-18 19:54:13.181  WARN 10640 --- [main] o.f.core.internal.command.DbValidate     : No migrations found. Are your locations set up correctly?
+2022-11-18 19:54:13.188 DEBUG 10640 --- [main] o.f.core.internal.command.DbSchemas      : Skipping creation of existing schema: "PUBLIC"
+2022-11-18 19:54:13.190  INFO 10640 --- [main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "PUBLIC"."flyway_schema_history" ...
+2022-11-18 19:54:13.199 DEBUG 10640 --- [main] o.flywaydb.core.internal.parser.Parser   : Parsing  ...
+2022-11-18 19:54:13.210 DEBUG 10640 --- [main] o.f.c.i.sqlscript.ParserSqlScript        : Found statement at line 1: CREATE TABLE IF NOT EXISTS "PUBLIC"."flyway_schema_history" (
+    "installed_rank" INT NOT NULL,
+    "version" VARCHAR(50),
+    "description" VARCHAR(200) NOT NULL,
+    "type" VARCHAR(20) NOT NULL,
+    "script" VARCHAR(1000) NOT NULL,
+    "checksum" INT,
+    "installed_by" VARCHAR(100) NOT NULL,
+    "installed_on" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "execution_time" INT NOT NULL,
+    "success" BOOLEAN NOT NULL,
+    CONSTRAINT "flyway_schema_history_pk" PRIMARY KEY ("installed_rank")
+) AS SELECT -1, NULL, '<< Flyway Schema History table created >>', 'TABLE', '', NULL, 'ADMIN', CURRENT_TIMESTAMP, 0, TRUE
+2022-11-18 19:54:13.211 DEBUG 10640 --- [main] o.f.c.i.sqlscript.ParserSqlScript        : Found statement at line 14: CREATE INDEX "PUBLIC"."flyway_schema_history_s_idx" ON "PUBLIC"."flyway_schema_history" ("success")
+2022-11-18 19:54:13.212 DEBUG 10640 --- [main] o.f.c.i.s.DefaultSqlScriptExecutor       : Executing SQL: CREATE TABLE IF NOT EXISTS "PUBLIC"."flyway_schema_history" (
+    "installed_rank" INT NOT NULL,
+    "version" VARCHAR(50),
+    "description" VARCHAR(200) NOT NULL,
+    "type" VARCHAR(20) NOT NULL,
+    "script" VARCHAR(1000) NOT NULL,
+    "checksum" INT,
+    "installed_by" VARCHAR(100) NOT NULL,
+    "installed_on" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "execution_time" INT NOT NULL,
+    "success" BOOLEAN NOT NULL,
+    CONSTRAINT "flyway_schema_history_pk" PRIMARY KEY ("installed_rank")
+) AS SELECT -1, NULL, '<< Flyway Schema History table created >>', 'TABLE', '', NULL, 'ADMIN', CURRENT_TIMESTAMP, 0, TRUE
+2022-11-18 19:54:13.222 DEBUG 10640 --- [main] o.f.c.i.s.DefaultSqlScriptExecutor       : 0 rows affected
+2022-11-18 19:54:13.222 DEBUG 10640 --- [main] o.f.c.i.s.DefaultSqlScriptExecutor       : Executing SQL: CREATE INDEX "PUBLIC"."flyway_schema_history_s_idx" ON "PUBLIC"."flyway_schema_history" ("success")
+2022-11-18 19:54:13.224 DEBUG 10640 --- [main] o.f.c.i.s.DefaultSqlScriptExecutor       : 0 rows affected
+2022-11-18 19:54:13.225 DEBUG 10640 --- [main] o.f.c.i.s.JdbcTableSchemaHistory         : Created Schema History table "PUBLIC"."flyway_schema_history"
+2022-11-18 19:54:13.232  INFO 10640 --- [main] o.f.core.internal.command.DbMigrate      : Current version of schema "PUBLIC": << Empty Schema >>
+2022-11-18 19:54:13.233  INFO 10640 --- [main] o.f.core.internal.command.DbMigrate      : Schema "PUBLIC" is up to date. No migration necessary.
+2022-11-18 19:54:13.236 DEBUG 10640 --- [main] org.flywaydb.core.FlywayExecutor         : Memory usage: 34 of 152M
+2022-11-18 19:54:13.488  INFO 10640 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-11-18 19:54:13.593  INFO 10640 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.12.Final
+2022-11-18 19:54:13.842  INFO 10640 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-11-18 19:54:13.996  INFO 10640 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2022-11-18 19:54:14.764  INFO 10640 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-11-18 19:54:14.772  INFO 10640 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-11-18 19:54:15.335  WARN 10640 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-11-18 19:54:15.727  INFO 10640 --- [main] o.a.coyote.http11.Http11NioProtocol      : Starting ProtocolHandler ["http-nio-5001"]
+2022-11-18 19:54:15.749  INFO 10640 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 5001 (http) with context path '/api'
+2022-11-18 19:54:15.759  INFO 10640 --- [main] com.softlaboratory.product.Application   : Started Application in 6.369 seconds (JVM running for 7.047)
+2022-11-18 20:19:59.351  INFO 10640 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-11-18 20:19:59.352  INFO 10640 --- [SpringApplicationShutdownHook] .SchemaDropperImpl$DelayedDropActionImpl : HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+2022-11-18 20:19:59.370  INFO 10640 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-11-18 20:19:59.375  INFO 10640 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-11-18 20:20:02.758  INFO 26232 --- [main] com.softlaboratory.product.Application   : Starting Application using Java 11.0.6 on LAPTOP-QERJ3GV7 with PID 26232 (C:\Users\wahyu\Documents\Projects\Learning Kafka\learning-kafka\product\target\classes started by wahyu in C:\Users\wahyu\Documents\Projects\Learning Kafka\learning-kafka\product)
+2022-11-18 20:20:02.761 DEBUG 26232 --- [main] com.softlaboratory.product.Application   : Running with Spring Boot v2.7.5, Spring v5.3.23
+2022-11-18 20:20:02.762  INFO 26232 --- [main] com.softlaboratory.product.Application   : The following 1 profile is active: "development"
+2022-11-18 20:20:03.594  INFO 26232 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-11-18 20:20:03.666  INFO 26232 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 59 ms. Found 1 JPA repository interfaces.
+2022-11-18 20:20:04.873  INFO 26232 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 5001 (http)
+2022-11-18 20:20:04.886  INFO 26232 --- [main] o.a.coyote.http11.Http11NioProtocol      : Initializing ProtocolHandler ["http-nio-5001"]
+2022-11-18 20:20:04.887  INFO 26232 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-11-18 20:20:04.887  INFO 26232 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.68]
+2022-11-18 20:20:05.205  INFO 26232 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2022-11-18 20:20:05.206  INFO 26232 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2378 ms
+2022-11-18 20:20:05.248  INFO 26232 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-11-18 20:20:05.564  INFO 26232 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-11-18 20:20:05.579  INFO 26232 --- [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-ui'. Database available at 'jdbc:h2:mem:db_product'
+2022-11-18 20:20:05.754  INFO 26232 --- [main] o.f.c.internal.license.VersionPrinter    : Flyway Community Edition 8.5.13 by Redgate
+2022-11-18 20:20:05.754  INFO 26232 --- [main] o.f.c.internal.license.VersionPrinter    : See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2022-11-18 20:20:05.754  INFO 26232 --- [main] o.f.c.internal.license.VersionPrinter    : 
+2022-11-18 20:20:05.757 DEBUG 26232 --- [main] o.f.core.internal.util.FeatureDetector   : AWS SDK available: false
+2022-11-18 20:20:05.758 DEBUG 26232 --- [main] o.f.core.internal.util.FeatureDetector   : Google Cloud Storage available: false
+2022-11-18 20:20:05.759 DEBUG 26232 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning for classpath resources at 'classpath:db/callback' ...
+2022-11-18 20:20:05.759 DEBUG 26232 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Determining location urls for classpath:db/callback using ClassLoader jdk.internal.loader.ClassLoaders$AppClassLoader@368239c8 ...
+2022-11-18 20:20:05.759 DEBUG 26232 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Unable to resolve location classpath:db/callback.
+2022-11-18 20:20:05.759 DEBUG 26232 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning for classpath resources at 'classpath:db/migrations/h2' ...
+2022-11-18 20:20:05.759 DEBUG 26232 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Determining location urls for classpath:db/migrations/h2 using ClassLoader jdk.internal.loader.ClassLoaders$AppClassLoader@368239c8 ...
+2022-11-18 20:20:05.760 DEBUG 26232 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Unable to resolve location classpath:db/migrations/h2.
+2022-11-18 20:20:05.760 DEBUG 26232 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning for classes at classpath:db/migrations/h2
+2022-11-18 20:20:05.778  INFO 26232 --- [main] o.f.c.i.database.base.BaseDatabaseType   : Database: jdbc:h2:mem:db_product (H2 2.1)
+2022-11-18 20:20:05.779 DEBUG 26232 --- [main] o.f.c.i.database.base.BaseDatabaseType   : Driver  : H2 JDBC Driver 2.1.214 (2022-06-13)
+2022-11-18 20:20:05.855 DEBUG 26232 --- [main] org.flywaydb.core.FlywayExecutor         : DDL Transactions Supported: false
+2022-11-18 20:20:05.863 DEBUG 26232 --- [main] o.f.c.i.s.SchemaHistoryFactory           : Schemas: 
+2022-11-18 20:20:05.864 DEBUG 26232 --- [main] o.f.c.i.s.SchemaHistoryFactory           : Default schema: null
+2022-11-18 20:20:05.876  WARN 26232 --- [main] o.f.c.internal.database.base.Database    : Flyway upgrade recommended: H2 2.1.214 is newer than this version of Flyway and support has not been tested. The latest supported version of H2 is 2.1.210.
+2022-11-18 20:20:05.879 DEBUG 26232 --- [main] o.f.c.i.c.SqlScriptCallbackFactory       : Scanning for SQL callbacks ...
+2022-11-18 20:20:05.896 DEBUG 26232 --- [main] o.f.core.internal.command.DbValidate     : Validating migrations ...
+2022-11-18 20:20:05.914  INFO 26232 --- [main] o.f.core.internal.command.DbValidate     : Successfully validated 0 migrations (execution time 00:00.015s)
+2022-11-18 20:20:05.914  WARN 26232 --- [main] o.f.core.internal.command.DbValidate     : No migrations found. Are your locations set up correctly?
+2022-11-18 20:20:05.921 DEBUG 26232 --- [main] o.f.core.internal.command.DbSchemas      : Skipping creation of existing schema: "PUBLIC"
+2022-11-18 20:20:05.924  INFO 26232 --- [main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "PUBLIC"."flyway_schema_history" ...
+2022-11-18 20:20:05.932 DEBUG 26232 --- [main] o.flywaydb.core.internal.parser.Parser   : Parsing  ...
+2022-11-18 20:20:05.944 DEBUG 26232 --- [main] o.f.c.i.sqlscript.ParserSqlScript        : Found statement at line 1: CREATE TABLE IF NOT EXISTS "PUBLIC"."flyway_schema_history" (
+    "installed_rank" INT NOT NULL,
+    "version" VARCHAR(50),
+    "description" VARCHAR(200) NOT NULL,
+    "type" VARCHAR(20) NOT NULL,
+    "script" VARCHAR(1000) NOT NULL,
+    "checksum" INT,
+    "installed_by" VARCHAR(100) NOT NULL,
+    "installed_on" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "execution_time" INT NOT NULL,
+    "success" BOOLEAN NOT NULL,
+    CONSTRAINT "flyway_schema_history_pk" PRIMARY KEY ("installed_rank")
+) AS SELECT -1, NULL, '<< Flyway Schema History table created >>', 'TABLE', '', NULL, 'ADMIN', CURRENT_TIMESTAMP, 0, TRUE
+2022-11-18 20:20:05.945 DEBUG 26232 --- [main] o.f.c.i.sqlscript.ParserSqlScript        : Found statement at line 14: CREATE INDEX "PUBLIC"."flyway_schema_history_s_idx" ON "PUBLIC"."flyway_schema_history" ("success")
+2022-11-18 20:20:05.946 DEBUG 26232 --- [main] o.f.c.i.s.DefaultSqlScriptExecutor       : Executing SQL: CREATE TABLE IF NOT EXISTS "PUBLIC"."flyway_schema_history" (
+    "installed_rank" INT NOT NULL,
+    "version" VARCHAR(50),
+    "description" VARCHAR(200) NOT NULL,
+    "type" VARCHAR(20) NOT NULL,
+    "script" VARCHAR(1000) NOT NULL,
+    "checksum" INT,
+    "installed_by" VARCHAR(100) NOT NULL,
+    "installed_on" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "execution_time" INT NOT NULL,
+    "success" BOOLEAN NOT NULL,
+    CONSTRAINT "flyway_schema_history_pk" PRIMARY KEY ("installed_rank")
+) AS SELECT -1, NULL, '<< Flyway Schema History table created >>', 'TABLE', '', NULL, 'ADMIN', CURRENT_TIMESTAMP, 0, TRUE
+2022-11-18 20:20:05.956 DEBUG 26232 --- [main] o.f.c.i.s.DefaultSqlScriptExecutor       : 0 rows affected
+2022-11-18 20:20:05.957 DEBUG 26232 --- [main] o.f.c.i.s.DefaultSqlScriptExecutor       : Executing SQL: CREATE INDEX "PUBLIC"."flyway_schema_history_s_idx" ON "PUBLIC"."flyway_schema_history" ("success")
+2022-11-18 20:20:05.959 DEBUG 26232 --- [main] o.f.c.i.s.DefaultSqlScriptExecutor       : 0 rows affected
+2022-11-18 20:20:05.960 DEBUG 26232 --- [main] o.f.c.i.s.JdbcTableSchemaHistory         : Created Schema History table "PUBLIC"."flyway_schema_history"
+2022-11-18 20:20:05.966  INFO 26232 --- [main] o.f.core.internal.command.DbMigrate      : Current version of schema "PUBLIC": << Empty Schema >>
+2022-11-18 20:20:05.968  INFO 26232 --- [main] o.f.core.internal.command.DbMigrate      : Schema "PUBLIC" is up to date. No migration necessary.
+2022-11-18 20:20:05.970 DEBUG 26232 --- [main] org.flywaydb.core.FlywayExecutor         : Memory usage: 40 of 152M
+2022-11-18 20:20:06.203  INFO 26232 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-11-18 20:20:06.291  INFO 26232 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.12.Final
+2022-11-18 20:20:06.508  INFO 26232 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-11-18 20:20:06.635  INFO 26232 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2022-11-18 20:20:07.317  INFO 26232 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-11-18 20:20:07.326  INFO 26232 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-11-18 20:20:07.913  WARN 26232 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-11-18 20:20:08.367  INFO 26232 --- [main] o.a.coyote.http11.Http11NioProtocol      : Starting ProtocolHandler ["http-nio-5001"]
+2022-11-18 20:20:08.415  INFO 26232 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 5001 (http) with context path '/api'
+2022-11-18 20:20:08.427  INFO 26232 --- [main] com.softlaboratory.product.Application   : Started Application in 6.407 seconds (JVM running for 7.057)
+2022-11-18 20:20:58.086  INFO 26232 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-11-18 20:20:58.087  INFO 26232 --- [SpringApplicationShutdownHook] .SchemaDropperImpl$DelayedDropActionImpl : HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+2022-11-18 20:20:58.095  INFO 26232 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-11-18 20:20:58.098  INFO 26232 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-11-18 20:21:01.198  INFO 25308 --- [main] com.softlaboratory.product.Application   : Starting Application using Java 11.0.6 on LAPTOP-QERJ3GV7 with PID 25308 (C:\Users\wahyu\Documents\Projects\Learning Kafka\learning-kafka\product\target\classes started by wahyu in C:\Users\wahyu\Documents\Projects\Learning Kafka\learning-kafka\product)
+2022-11-18 20:21:01.201 DEBUG 25308 --- [main] com.softlaboratory.product.Application   : Running with Spring Boot v2.7.5, Spring v5.3.23
+2022-11-18 20:21:01.202  INFO 25308 --- [main] com.softlaboratory.product.Application   : The following 1 profile is active: "development"
+2022-11-18 20:21:02.046  INFO 25308 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-11-18 20:21:02.117  INFO 25308 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 58 ms. Found 1 JPA repository interfaces.
+2022-11-18 20:21:03.235  INFO 25308 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 5001 (http)
+2022-11-18 20:21:03.247  INFO 25308 --- [main] o.a.coyote.http11.Http11NioProtocol      : Initializing ProtocolHandler ["http-nio-5001"]
+2022-11-18 20:21:03.248  INFO 25308 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-11-18 20:21:03.248  INFO 25308 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.68]
+2022-11-18 20:21:03.544  INFO 25308 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2022-11-18 20:21:03.545  INFO 25308 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2275 ms
+2022-11-18 20:21:03.584  INFO 25308 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-11-18 20:21:03.871  INFO 25308 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-11-18 20:21:03.887  INFO 25308 --- [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-ui'. Database available at 'jdbc:h2:mem:db_product'
+2022-11-18 20:21:04.057  INFO 25308 --- [main] o.f.c.internal.license.VersionPrinter    : Flyway Community Edition 8.5.13 by Redgate
+2022-11-18 20:21:04.057  INFO 25308 --- [main] o.f.c.internal.license.VersionPrinter    : See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2022-11-18 20:21:04.058  INFO 25308 --- [main] o.f.c.internal.license.VersionPrinter    : 
+2022-11-18 20:21:04.061 DEBUG 25308 --- [main] o.f.core.internal.util.FeatureDetector   : AWS SDK available: false
+2022-11-18 20:21:04.062 DEBUG 25308 --- [main] o.f.core.internal.util.FeatureDetector   : Google Cloud Storage available: false
+2022-11-18 20:21:04.063 DEBUG 25308 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning for classpath resources at 'classpath:db/callback' ...
+2022-11-18 20:21:04.063 DEBUG 25308 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Determining location urls for classpath:db/callback using ClassLoader jdk.internal.loader.ClassLoaders$AppClassLoader@368239c8 ...
+2022-11-18 20:21:04.063 DEBUG 25308 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Unable to resolve location classpath:db/callback.
+2022-11-18 20:21:04.064 DEBUG 25308 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning for classpath resources at 'classpath:db/migration' ...
+2022-11-18 20:21:04.064 DEBUG 25308 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Determining location urls for classpath:db/migration using ClassLoader jdk.internal.loader.ClassLoaders$AppClassLoader@368239c8 ...
+2022-11-18 20:21:04.065 DEBUG 25308 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning URL: file:/C:/Users/wahyu/Documents/Projects/Learning%20Kafka/learning-kafka/product/target/classes/db/migration
+2022-11-18 20:21:04.065 DEBUG 25308 --- [main] o.f.core.internal.util.FeatureDetector   : JBoss VFS v2 available: false
+2022-11-18 20:21:04.074 DEBUG 25308 --- [main] i.s.c.FileSystemClassPathLocationScanner : Scanning starting at classpath root in filesystem: C:\Users\wahyu\Documents\Projects\Learning Kafka\learning-kafka\product\target\classes\
+2022-11-18 20:21:04.074 DEBUG 25308 --- [main] i.s.c.FileSystemClassPathLocationScanner : Scanning for resources in path: C:\Users\wahyu\Documents\Projects\Learning Kafka\learning-kafka\product\target\classes\db\migration (db/migration)
+2022-11-18 20:21:04.077 DEBUG 25308 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V1__initial_database.sql
+2022-11-18 20:21:04.077 DEBUG 25308 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning for classes at classpath:db/migration
+2022-11-18 20:21:04.081 DEBUG 25308 --- [main] o.f.c.i.resource.ResourceNameValidator   : Validating V1__initial_database.sql
+2022-11-18 20:21:04.094  INFO 25308 --- [main] o.f.c.i.database.base.BaseDatabaseType   : Database: jdbc:h2:mem:db_product (H2 2.1)
+2022-11-18 20:21:04.095 DEBUG 25308 --- [main] o.f.c.i.database.base.BaseDatabaseType   : Driver  : H2 JDBC Driver 2.1.214 (2022-06-13)
+2022-11-18 20:21:04.168 DEBUG 25308 --- [main] org.flywaydb.core.FlywayExecutor         : DDL Transactions Supported: false
+2022-11-18 20:21:04.172 DEBUG 25308 --- [main] o.f.c.i.s.SchemaHistoryFactory           : Schemas: 
+2022-11-18 20:21:04.173 DEBUG 25308 --- [main] o.f.c.i.s.SchemaHistoryFactory           : Default schema: null
+2022-11-18 20:21:04.180  WARN 25308 --- [main] o.f.c.internal.database.base.Database    : Flyway upgrade recommended: H2 2.1.214 is newer than this version of Flyway and support has not been tested. The latest supported version of H2 is 2.1.210.
+2022-11-18 20:21:04.184 DEBUG 25308 --- [main] o.f.c.i.c.SqlScriptCallbackFactory       : Scanning for SQL callbacks ...
+2022-11-18 20:21:04.197 DEBUG 25308 --- [main] o.f.core.internal.command.DbValidate     : Validating migrations ...
+2022-11-18 20:21:04.212 DEBUG 25308 --- [main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V1__initial_database.sql (filename: V1__initial_database.sql)
+2022-11-18 20:21:04.221  INFO 25308 --- [main] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.022s)
+2022-11-18 20:21:04.228 DEBUG 25308 --- [main] o.f.core.internal.command.DbSchemas      : Skipping creation of existing schema: "PUBLIC"
+2022-11-18 20:21:04.230  INFO 25308 --- [main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "PUBLIC"."flyway_schema_history" ...
+2022-11-18 20:21:04.234 DEBUG 25308 --- [main] o.flywaydb.core.internal.parser.Parser   : Parsing  ...
+2022-11-18 20:21:04.244 DEBUG 25308 --- [main] o.f.c.i.sqlscript.ParserSqlScript        : Found statement at line 1: CREATE TABLE IF NOT EXISTS "PUBLIC"."flyway_schema_history" (
+    "installed_rank" INT NOT NULL,
+    "version" VARCHAR(50),
+    "description" VARCHAR(200) NOT NULL,
+    "type" VARCHAR(20) NOT NULL,
+    "script" VARCHAR(1000) NOT NULL,
+    "checksum" INT,
+    "installed_by" VARCHAR(100) NOT NULL,
+    "installed_on" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "execution_time" INT NOT NULL,
+    "success" BOOLEAN NOT NULL,
+    CONSTRAINT "flyway_schema_history_pk" PRIMARY KEY ("installed_rank")
+) AS SELECT -1, NULL, '<< Flyway Schema History table created >>', 'TABLE', '', NULL, 'ADMIN', CURRENT_TIMESTAMP, 0, TRUE
+2022-11-18 20:21:04.245 DEBUG 25308 --- [main] o.f.c.i.sqlscript.ParserSqlScript        : Found statement at line 14: CREATE INDEX "PUBLIC"."flyway_schema_history_s_idx" ON "PUBLIC"."flyway_schema_history" ("success")
+2022-11-18 20:21:04.246 DEBUG 25308 --- [main] o.f.c.i.s.DefaultSqlScriptExecutor       : Executing SQL: CREATE TABLE IF NOT EXISTS "PUBLIC"."flyway_schema_history" (
+    "installed_rank" INT NOT NULL,
+    "version" VARCHAR(50),
+    "description" VARCHAR(200) NOT NULL,
+    "type" VARCHAR(20) NOT NULL,
+    "script" VARCHAR(1000) NOT NULL,
+    "checksum" INT,
+    "installed_by" VARCHAR(100) NOT NULL,
+    "installed_on" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "execution_time" INT NOT NULL,
+    "success" BOOLEAN NOT NULL,
+    CONSTRAINT "flyway_schema_history_pk" PRIMARY KEY ("installed_rank")
+) AS SELECT -1, NULL, '<< Flyway Schema History table created >>', 'TABLE', '', NULL, 'ADMIN', CURRENT_TIMESTAMP, 0, TRUE
+2022-11-18 20:21:04.254 DEBUG 25308 --- [main] o.f.c.i.s.DefaultSqlScriptExecutor       : 0 rows affected
+2022-11-18 20:21:04.254 DEBUG 25308 --- [main] o.f.c.i.s.DefaultSqlScriptExecutor       : Executing SQL: CREATE INDEX "PUBLIC"."flyway_schema_history_s_idx" ON "PUBLIC"."flyway_schema_history" ("success")
+2022-11-18 20:21:04.257 DEBUG 25308 --- [main] o.f.c.i.s.DefaultSqlScriptExecutor       : 0 rows affected
+2022-11-18 20:21:04.257 DEBUG 25308 --- [main] o.f.c.i.s.JdbcTableSchemaHistory         : Created Schema History table "PUBLIC"."flyway_schema_history"
+2022-11-18 20:21:04.264  INFO 25308 --- [main] o.f.core.internal.command.DbMigrate      : Current version of schema "PUBLIC": << Empty Schema >>
+2022-11-18 20:21:04.265 DEBUG 25308 --- [main] o.flywaydb.core.internal.parser.Parser   : Parsing V1__initial_database.sql ...
+2022-11-18 20:21:04.269 DEBUG 25308 --- [main] o.f.c.i.sqlscript.ParserSqlScript        : Found statement at line 1: CREATE TABLE t_product (
+  id BIGINT AUTO_INCREMENT NOT NULL,
+   deleted_at TIMESTAMP,
+   is_deleted BOOLEAN,
+   created_at TIMESTAMP NOT NULL,
+   created_by VARCHAR(50) NOT NULL,
+   updated_at TIMESTAMP,
+   updated_by VARCHAR(50),
+   name VARCHAR(50) NOT NULL,
+   description CLOB NOT NULL,
+   price DOUBLE NOT NULL,
+   stock INT NOT NULL,
+   CONSTRAINT pk_t_product PRIMARY KEY (id)
+)
+2022-11-18 20:21:04.271 DEBUG 25308 --- [main] o.f.core.internal.command.DbMigrate      : Starting migration of schema "PUBLIC" to version "1 - initial database" ...
+2022-11-18 20:21:04.273  INFO 25308 --- [main] o.f.core.internal.command.DbMigrate      : Migrating schema "PUBLIC" to version "1 - initial database"
+2022-11-18 20:21:04.274 DEBUG 25308 --- [main] o.f.c.i.s.DefaultSqlScriptExecutor       : Executing SQL: CREATE TABLE t_product (
+  id BIGINT AUTO_INCREMENT NOT NULL,
+   deleted_at TIMESTAMP,
+   is_deleted BOOLEAN,
+   created_at TIMESTAMP NOT NULL,
+   created_by VARCHAR(50) NOT NULL,
+   updated_at TIMESTAMP,
+   updated_by VARCHAR(50),
+   name VARCHAR(50) NOT NULL,
+   description CLOB NOT NULL,
+   price DOUBLE NOT NULL,
+   stock INT NOT NULL,
+   CONSTRAINT pk_t_product PRIMARY KEY (id)
+)
+2022-11-18 20:21:04.287 DEBUG 25308 --- [main] o.f.c.i.s.DefaultSqlScriptExecutor       : 0 rows affected
+2022-11-18 20:21:04.287 DEBUG 25308 --- [main] o.f.core.internal.command.DbMigrate      : Successfully completed migration of schema "PUBLIC" to version "1 - initial database"
+2022-11-18 20:21:04.292 DEBUG 25308 --- [main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema History table "PUBLIC"."flyway_schema_history" successfully updated to reflect changes
+2022-11-18 20:21:04.302  INFO 25308 --- [main] o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema "PUBLIC", now at version v1 (execution time 00:00.040s)
+2022-11-18 20:21:04.305 DEBUG 25308 --- [main] org.flywaydb.core.FlywayExecutor         : Memory usage: 41 of 152M
+2022-11-18 20:21:04.549  INFO 25308 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-11-18 20:21:04.618  INFO 25308 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.12.Final
+2022-11-18 20:21:04.863  INFO 25308 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-11-18 20:21:04.986  INFO 25308 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2022-11-18 20:21:05.591  INFO 25308 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-11-18 20:21:05.598  INFO 25308 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-11-18 20:21:06.121  WARN 25308 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-11-18 20:21:06.569  INFO 25308 --- [main] o.a.coyote.http11.Http11NioProtocol      : Starting ProtocolHandler ["http-nio-5001"]
+2022-11-18 20:21:06.591  INFO 25308 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 5001 (http) with context path '/api'
+2022-11-18 20:21:06.603  INFO 25308 --- [main] com.softlaboratory.product.Application   : Started Application in 6.121 seconds (JVM running for 6.771)
+2022-11-18 20:21:55.261  INFO 25308 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-11-18 20:21:55.261  INFO 25308 --- [SpringApplicationShutdownHook] .SchemaDropperImpl$DelayedDropActionImpl : HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+2022-11-18 20:21:55.268  INFO 25308 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-11-18 20:21:55.271  INFO 25308 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-11-18 20:21:58.200  INFO 16784 --- [main] com.softlaboratory.product.Application   : Starting Application using Java 11.0.6 on LAPTOP-QERJ3GV7 with PID 16784 (C:\Users\wahyu\Documents\Projects\Learning Kafka\learning-kafka\product\target\classes started by wahyu in C:\Users\wahyu\Documents\Projects\Learning Kafka\learning-kafka\product)
+2022-11-18 20:21:58.204 DEBUG 16784 --- [main] com.softlaboratory.product.Application   : Running with Spring Boot v2.7.5, Spring v5.3.23
+2022-11-18 20:21:58.205  INFO 16784 --- [main] com.softlaboratory.product.Application   : The following 1 profile is active: "development"
+2022-11-18 20:21:59.013  INFO 16784 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-11-18 20:21:59.085  INFO 16784 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 58 ms. Found 1 JPA repository interfaces.
+2022-11-18 20:22:00.254  INFO 16784 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 5001 (http)
+2022-11-18 20:22:00.266  INFO 16784 --- [main] o.a.coyote.http11.Http11NioProtocol      : Initializing ProtocolHandler ["http-nio-5001"]
+2022-11-18 20:22:00.267  INFO 16784 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-11-18 20:22:00.267  INFO 16784 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.68]
+2022-11-18 20:22:00.603  INFO 16784 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2022-11-18 20:22:00.604  INFO 16784 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2331 ms
+2022-11-18 20:22:00.649  INFO 16784 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-11-18 20:22:00.934  INFO 16784 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-11-18 20:22:00.949  INFO 16784 --- [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-ui'. Database available at 'jdbc:h2:mem:db_product'
+2022-11-18 20:22:01.127  INFO 16784 --- [main] o.f.c.internal.license.VersionPrinter    : Flyway Community Edition 8.5.13 by Redgate
+2022-11-18 20:22:01.128  INFO 16784 --- [main] o.f.c.internal.license.VersionPrinter    : See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2022-11-18 20:22:01.128  INFO 16784 --- [main] o.f.c.internal.license.VersionPrinter    : 
+2022-11-18 20:22:01.131 DEBUG 16784 --- [main] o.f.core.internal.util.FeatureDetector   : AWS SDK available: false
+2022-11-18 20:22:01.132 DEBUG 16784 --- [main] o.f.core.internal.util.FeatureDetector   : Google Cloud Storage available: false
+2022-11-18 20:22:01.133 DEBUG 16784 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning for classpath resources at 'classpath:db/callback' ...
+2022-11-18 20:22:01.134 DEBUG 16784 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Determining location urls for classpath:db/callback using ClassLoader jdk.internal.loader.ClassLoaders$AppClassLoader@368239c8 ...
+2022-11-18 20:22:01.134 DEBUG 16784 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Unable to resolve location classpath:db/callback.
+2022-11-18 20:22:01.134 DEBUG 16784 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning for classpath resources at 'classpath:db/migration' ...
+2022-11-18 20:22:01.134 DEBUG 16784 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Determining location urls for classpath:db/migration using ClassLoader jdk.internal.loader.ClassLoaders$AppClassLoader@368239c8 ...
+2022-11-18 20:22:01.135 DEBUG 16784 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning URL: file:/C:/Users/wahyu/Documents/Projects/Learning%20Kafka/learning-kafka/product/target/classes/db/migration
+2022-11-18 20:22:01.135 DEBUG 16784 --- [main] o.f.core.internal.util.FeatureDetector   : JBoss VFS v2 available: false
+2022-11-18 20:22:01.137 DEBUG 16784 --- [main] i.s.c.FileSystemClassPathLocationScanner : Scanning starting at classpath root in filesystem: C:\Users\wahyu\Documents\Projects\Learning Kafka\learning-kafka\product\target\classes\
+2022-11-18 20:22:01.138 DEBUG 16784 --- [main] i.s.c.FileSystemClassPathLocationScanner : Scanning for resources in path: C:\Users\wahyu\Documents\Projects\Learning Kafka\learning-kafka\product\target\classes\db\migration (db/migration)
+2022-11-18 20:22:01.140 DEBUG 16784 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Found resource: db/migration/V1__initial_database.sql
+2022-11-18 20:22:01.140 DEBUG 16784 --- [main] o.f.c.i.s.classpath.ClassPathScanner     : Scanning for classes at classpath:db/migration
+2022-11-18 20:22:01.146 DEBUG 16784 --- [main] o.f.c.i.resource.ResourceNameValidator   : Validating V1__initial_database.sql
+2022-11-18 20:22:01.162  INFO 16784 --- [main] o.f.c.i.database.base.BaseDatabaseType   : Database: jdbc:h2:mem:db_product (H2 2.1)
+2022-11-18 20:22:01.164 DEBUG 16784 --- [main] o.f.c.i.database.base.BaseDatabaseType   : Driver  : H2 JDBC Driver 2.1.214 (2022-06-13)
+2022-11-18 20:22:01.230 DEBUG 16784 --- [main] org.flywaydb.core.FlywayExecutor         : DDL Transactions Supported: false
+2022-11-18 20:22:01.235 DEBUG 16784 --- [main] o.f.c.i.s.SchemaHistoryFactory           : Schemas: 
+2022-11-18 20:22:01.236 DEBUG 16784 --- [main] o.f.c.i.s.SchemaHistoryFactory           : Default schema: null
+2022-11-18 20:22:01.245  WARN 16784 --- [main] o.f.c.internal.database.base.Database    : Flyway upgrade recommended: H2 2.1.214 is newer than this version of Flyway and support has not been tested. The latest supported version of H2 is 2.1.210.
+2022-11-18 20:22:01.249 DEBUG 16784 --- [main] o.f.c.i.c.SqlScriptCallbackFactory       : Scanning for SQL callbacks ...
+2022-11-18 20:22:01.264 DEBUG 16784 --- [main] o.f.core.internal.command.DbValidate     : Validating migrations ...
+2022-11-18 20:22:01.277 DEBUG 16784 --- [main] o.f.core.internal.scanner.Scanner        : Filtering out resource: db/migration/V1__initial_database.sql (filename: V1__initial_database.sql)
+2022-11-18 20:22:01.284  INFO 16784 --- [main] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.017s)
+2022-11-18 20:22:01.290 DEBUG 16784 --- [main] o.f.core.internal.command.DbSchemas      : Skipping creation of existing schema: "PUBLIC"
+2022-11-18 20:22:01.292  INFO 16784 --- [main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "PUBLIC"."flyway_schema_history" ...
+2022-11-18 20:22:01.295 DEBUG 16784 --- [main] o.flywaydb.core.internal.parser.Parser   : Parsing  ...
+2022-11-18 20:22:01.304 DEBUG 16784 --- [main] o.f.c.i.sqlscript.ParserSqlScript        : Found statement at line 1: CREATE TABLE IF NOT EXISTS "PUBLIC"."flyway_schema_history" (
+    "installed_rank" INT NOT NULL,
+    "version" VARCHAR(50),
+    "description" VARCHAR(200) NOT NULL,
+    "type" VARCHAR(20) NOT NULL,
+    "script" VARCHAR(1000) NOT NULL,
+    "checksum" INT,
+    "installed_by" VARCHAR(100) NOT NULL,
+    "installed_on" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "execution_time" INT NOT NULL,
+    "success" BOOLEAN NOT NULL,
+    CONSTRAINT "flyway_schema_history_pk" PRIMARY KEY ("installed_rank")
+) AS SELECT -1, NULL, '<< Flyway Schema History table created >>', 'TABLE', '', NULL, 'ADMIN', CURRENT_TIMESTAMP, 0, TRUE
+2022-11-18 20:22:01.304 DEBUG 16784 --- [main] o.f.c.i.sqlscript.ParserSqlScript        : Found statement at line 14: CREATE INDEX "PUBLIC"."flyway_schema_history_s_idx" ON "PUBLIC"."flyway_schema_history" ("success")
+2022-11-18 20:22:01.305 DEBUG 16784 --- [main] o.f.c.i.s.DefaultSqlScriptExecutor       : Executing SQL: CREATE TABLE IF NOT EXISTS "PUBLIC"."flyway_schema_history" (
+    "installed_rank" INT NOT NULL,
+    "version" VARCHAR(50),
+    "description" VARCHAR(200) NOT NULL,
+    "type" VARCHAR(20) NOT NULL,
+    "script" VARCHAR(1000) NOT NULL,
+    "checksum" INT,
+    "installed_by" VARCHAR(100) NOT NULL,
+    "installed_on" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "execution_time" INT NOT NULL,
+    "success" BOOLEAN NOT NULL,
+    CONSTRAINT "flyway_schema_history_pk" PRIMARY KEY ("installed_rank")
+) AS SELECT -1, NULL, '<< Flyway Schema History table created >>', 'TABLE', '', NULL, 'ADMIN', CURRENT_TIMESTAMP, 0, TRUE
+2022-11-18 20:22:01.315 DEBUG 16784 --- [main] o.f.c.i.s.DefaultSqlScriptExecutor       : 0 rows affected
+2022-11-18 20:22:01.315 DEBUG 16784 --- [main] o.f.c.i.s.DefaultSqlScriptExecutor       : Executing SQL: CREATE INDEX "PUBLIC"."flyway_schema_history_s_idx" ON "PUBLIC"."flyway_schema_history" ("success")
+2022-11-18 20:22:01.317 DEBUG 16784 --- [main] o.f.c.i.s.DefaultSqlScriptExecutor       : 0 rows affected
+2022-11-18 20:22:01.317 DEBUG 16784 --- [main] o.f.c.i.s.JdbcTableSchemaHistory         : Created Schema History table "PUBLIC"."flyway_schema_history"
+2022-11-18 20:22:01.324  INFO 16784 --- [main] o.f.core.internal.command.DbMigrate      : Current version of schema "PUBLIC": << Empty Schema >>
+2022-11-18 20:22:01.324 DEBUG 16784 --- [main] o.flywaydb.core.internal.parser.Parser   : Parsing V1__initial_database.sql ...
+2022-11-18 20:22:01.328 DEBUG 16784 --- [main] o.f.c.i.sqlscript.ParserSqlScript        : Found statement at line 1: CREATE TABLE t_product (
+  id BIGINT AUTO_INCREMENT NOT NULL,
+   deleted_at TIMESTAMP,
+   is_deleted BOOLEAN,
+   created_at TIMESTAMP NOT NULL,
+   created_by VARCHAR(50) NOT NULL,
+   updated_at TIMESTAMP,
+   updated_by VARCHAR(50),
+   name VARCHAR(50) NOT NULL,
+   description CLOB NOT NULL,
+   price DOUBLE NOT NULL,
+   stock INT NOT NULL,
+   CONSTRAINT pk_t_product PRIMARY KEY (id)
+)
+2022-11-18 20:22:01.329 DEBUG 16784 --- [main] o.f.core.internal.command.DbMigrate      : Starting migration of schema "PUBLIC" to version "1 - initial database" ...
+2022-11-18 20:22:01.331  INFO 16784 --- [main] o.f.core.internal.command.DbMigrate      : Migrating schema "PUBLIC" to version "1 - initial database"
+2022-11-18 20:22:01.333 DEBUG 16784 --- [main] o.f.c.i.s.DefaultSqlScriptExecutor       : Executing SQL: CREATE TABLE t_product (
+  id BIGINT AUTO_INCREMENT NOT NULL,
+   deleted_at TIMESTAMP,
+   is_deleted BOOLEAN,
+   created_at TIMESTAMP NOT NULL,
+   created_by VARCHAR(50) NOT NULL,
+   updated_at TIMESTAMP,
+   updated_by VARCHAR(50),
+   name VARCHAR(50) NOT NULL,
+   description CLOB NOT NULL,
+   price DOUBLE NOT NULL,
+   stock INT NOT NULL,
+   CONSTRAINT pk_t_product PRIMARY KEY (id)
+)
+2022-11-18 20:22:01.340 DEBUG 16784 --- [main] o.f.c.i.s.DefaultSqlScriptExecutor       : 0 rows affected
+2022-11-18 20:22:01.340 DEBUG 16784 --- [main] o.f.core.internal.command.DbMigrate      : Successfully completed migration of schema "PUBLIC" to version "1 - initial database"
+2022-11-18 20:22:01.344 DEBUG 16784 --- [main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema History table "PUBLIC"."flyway_schema_history" successfully updated to reflect changes
+2022-11-18 20:22:01.352  INFO 16784 --- [main] o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema "PUBLIC", now at version v1 (execution time 00:00.031s)
+2022-11-18 20:22:01.354 DEBUG 16784 --- [main] org.flywaydb.core.FlywayExecutor         : Memory usage: 34 of 152M
+2022-11-18 20:22:01.545  INFO 16784 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-11-18 20:22:01.639  INFO 16784 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.12.Final
+2022-11-18 20:22:01.863  INFO 16784 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-11-18 20:22:01.995  INFO 16784 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2022-11-18 20:22:02.582  INFO 16784 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-11-18 20:22:02.591  INFO 16784 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-11-18 20:22:03.090  WARN 16784 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-11-18 20:22:03.489  INFO 16784 --- [main] o.a.coyote.http11.Http11NioProtocol      : Starting ProtocolHandler ["http-nio-5001"]
+2022-11-18 20:22:03.519  INFO 16784 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 5001 (http) with context path '/api'
+2022-11-18 20:22:03.527  INFO 16784 --- [main] com.softlaboratory.product.Application   : Started Application in 6.029 seconds (JVM running for 6.67)

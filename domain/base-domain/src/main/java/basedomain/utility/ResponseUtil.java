@@ -15,11 +15,14 @@ public class ResponseUtil {
     }
 
     public static ResponseEntity<Object> build(HttpStatus httpStatus, String message, Object data) {
-        return new ResponseEntity<>(ApiResponse.builder()
-                .timestamp(LocalDateTime.now(ZoneId.of(AppConstant.APP_TIMEZONE)))
-                .statusCode(httpStatus.value())
-                .message(message)
-                .data(data), httpStatus);
+
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.setTimestamp(LocalDateTime.now(ZoneId.of(AppConstant.APP_TIMEZONE)));
+        apiResponse.setStatusCode(httpStatus.value());
+        apiResponse.setMessage(message);
+        apiResponse.setData(data);
+
+        return new ResponseEntity<>(apiResponse, httpStatus);
     }
 
 }
