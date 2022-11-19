@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import product.dao.ProductDao;
 import product.dto.ProductDto;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -88,6 +90,7 @@ public class ProductServiceImpl implements ProductService {
         ProductDto dto = modelMapper.map(productDao, ProductDto.class);
 
         log.info("Save new data success.");
+
         return ResponseUtil.build(HttpStatus.OK, HttpStatus.OK.getReasonPhrase(), dto);
     }
 
