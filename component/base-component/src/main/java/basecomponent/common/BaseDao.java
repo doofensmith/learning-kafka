@@ -1,6 +1,6 @@
-package basedomain.common;
+package basecomponent.common;
 
-import basedomain.constant.AppConstant;
+import basecomponent.constant.AppConstant;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

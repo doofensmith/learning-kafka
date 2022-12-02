@@ -1,4 +1,4 @@
-package basedomain.common;
+package basecomponent.common;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

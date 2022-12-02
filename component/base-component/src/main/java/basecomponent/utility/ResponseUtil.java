@@ -1,7 +1,7 @@
-package basedomain.utility;
+package basecomponent.utility;
 
-import basedomain.common.ApiResponse;
-import basedomain.constant.AppConstant;
+import basecomponent.common.ApiResponse;
+import basecomponent.constant.AppConstant;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

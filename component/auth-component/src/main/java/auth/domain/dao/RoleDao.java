@@ -1,6 +1,6 @@
 package auth.domain.dao;
 
-import basedomain.common.BaseDaoSoftDelete;
+import basecomponent.common.BaseDaoSoftDelete;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
