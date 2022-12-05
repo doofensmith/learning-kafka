@@ -1,7 +1,6 @@
 package com.softlaboratory.product.service.impl;
 
-import basedomain.utility.ResponseUtil;
-import com.softlaboratory.product.repository.ProductRepository;
+import basecomponent.utility.ResponseUtil;
 import com.softlaboratory.product.service.ProductService;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -9,12 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import product.dao.ProductDao;
-import product.dto.ProductDto;
+import product.domain.dao.ProductDao;
+import product.domain.dto.ProductDto;
+import product.repository.ProductRepository;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,9 +22,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository repository;
-
-    @Autowired
-    private ModelMapper modelMapper;
 
     @Override
     public ResponseEntity<Object> getAll() {
@@ -59,7 +54,13 @@ public class ProductServiceImpl implements ProductService {
         Optional<ProductDao> dao = repository.findById(id);
         if (dao.isPresent()) {
             log.debug("Data {} is present, converting to data transfer.", id);
-            ProductDto dto = modelMapper.map(dao.get(), ProductDto.class);
+            ProductDto dto = ProductDto.builder()
+                    .id(dao.get().getId())
+                    .name(dao.get().getName())
+                    .description(dao.get().getDescription())
+                    .stock(dao.get().getStock())
+                    .price(dao.get().getPrice())
+                    .build();
 
             log.info("Get data by id success.");
             return ResponseUtil.build(HttpStatus.OK, HttpStatus.OK.getReasonPhrase(), dto);
@@ -79,19 +80,19 @@ public class ProductServiceImpl implements ProductService {
         ProductDao productDao = ProductDao.builder()
                 .name(request.getName())
                 .description(request.getDescription())
-                .price(request.getPrice())
                 .stock(request.getStock())
+                .price(request.getPrice())
                 .build();
 
         log.debug("Save data with repository.");
         productDao = repository.save(productDao);
 
-        log.debug("Convert result to data transfer.");
-        ProductDto dto = modelMapper.map(productDao, ProductDto.class);
+//        log.debug("Convert result to data transfer.");
+//        ProductDto dto = modelMapper.map(productDao, ProductDto.class);
 
         log.info("Save new data success.");
 
-        return ResponseUtil.build(HttpStatus.OK, HttpStatus.OK.getReasonPhrase(), dto);
+        return ResponseUtil.build(HttpStatus.OK, HttpStatus.OK.getReasonPhrase(), null);
     }
 
     @Override
@@ -111,11 +112,11 @@ public class ProductServiceImpl implements ProductService {
             log.debug("Update data with repository.");
             repository.save(daoNew);
 
-            log.debug("Convert result to data transfer.");
-            ProductDto dto = modelMapper.map(daoNew, ProductDto.class);
+//            log.debug("Convert result to data transfer.");
+//            ProductDto dto = modelMapper.map(daoNew, ProductDto.class);
 
             log.info("Update data by id success.");
-            return ResponseUtil.build(HttpStatus.OK, HttpStatus.OK.getReasonPhrase(), dto);
+            return ResponseUtil.build(HttpStatus.OK, HttpStatus.OK.getReasonPhrase(), null);
         }else {
             log.debug("Data with id {} not found.", id);
 

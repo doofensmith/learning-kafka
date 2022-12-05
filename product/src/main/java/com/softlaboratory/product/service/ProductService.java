@@ -2,7 +2,7 @@ package com.softlaboratory.product.service;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import product.dto.ProductDto;
+import product.domain.dto.ProductDto;
 
 @Service
 public interface ProductService {

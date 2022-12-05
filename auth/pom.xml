@@ -120,14 +120,19 @@
 		</dependency>
 		<dependency>
 			<groupId>com.softlaboratory</groupId>
-			<artifactId>auth-component</artifactId>
+			<artifactId>base-component</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.softlaboratory</groupId>
-			<artifactId>base-component</artifactId>
+			<artifactId>auth-component</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.softlaboratory</groupId>-->
+<!--			<artifactId>security-component</artifactId>-->
+<!--			<version>0.0.1-SNAPSHOT</version>-->
+<!--		</dependency>-->
 
 		<!--		DOCUMENTATION-->
 		<dependency>

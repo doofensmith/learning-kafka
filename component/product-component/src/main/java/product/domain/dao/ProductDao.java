@@ -11,8 +11,7 @@ import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Data
 @SuperBuilder
 @Entity
 @Table(name = "t_product")

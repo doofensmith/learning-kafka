@@ -1,13 +1,12 @@
 package com.softlaboratory.product.controller;
 
-import com.softlaboratory.product.kafka.producer.KafkaProducer;
 import com.softlaboratory.product.service.ProductService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import product.dto.ProductDto;
+import product.domain.dto.ProductDto;
 
 @Log4j2
 @RestController
@@ -15,12 +14,12 @@ import product.dto.ProductDto;
 public class ProductController {
 
     @Autowired
-    private KafkaProducer producer;
+    private ProductService service;
 
     @GetMapping(value = "")
     public ResponseEntity<Object> getAll() {
         try {
-            return producer.sendResponseOfGetAll();
+            return service.getAll();
         }catch (Exception e) {
             log.error("Error {}", e.getMessage());
             throw e;
@@ -30,7 +29,7 @@ public class ProductController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<Object> getById(@PathVariable Long id) {
         try {
-            return producer.sendResponseOfGetById(id);
+            return service.getById(id);
         }catch (Exception e) {
             log.error("Error {}", e.getMessage());
             throw e;
@@ -40,7 +39,7 @@ public class ProductController {
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> create(@RequestBody ProductDto request) {
         try {
-            return producer.sendResponseOfCreate(request);
+            return service.create(request);
         }catch (Exception e) {
             log.error("Error {}", e.getMessage());
             throw e;
@@ -50,17 +49,17 @@ public class ProductController {
     @PatchMapping(value = "/{id}")
     public ResponseEntity<Object> updateById(@PathVariable Long id, @RequestBody ProductDto request) {
         try {
-            return producer.sendResponseOfUpdateById(id, request);
+            return service.updateById(id, request);
         }catch (Exception e) {
             log.error("Error {}", e.getMessage());
             throw e;
         }
     }
 
-    @DeleteMapping
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<Object> deleteById(@PathVariable Long id) {
         try {
-            return producer.sendResponseOfDeleteById(id);
+            return service.deleteById(id);
         }catch (Exception e) {
             log.error("Error {}", e.getMessage());
             throw e;
