@@ -11,7 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -25,9 +25,9 @@ import java.util.stream.Collectors;
 @Table(name = "t_account_master")
 @SQLDelete(sql = "update t_account_master set is_deleted=true, deleted_at=current_timestamp where id=?")
 @Where(clause = "is_deleted=false")
-public class AccountDao extends BaseDaoSoftDelete implements UserDetails, Serializable {
+public class AccountDao extends BaseDaoSoftDelete implements UserDetails {
 
-    private static final long serialVersionUID = -8806133360169738965L;
+    private static final long serialVersionUID = 2149818353805086767L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,20 +36,20 @@ public class AccountDao extends BaseDaoSoftDelete implements UserDetails, Serial
     @Column(nullable = false, unique = true, length = 50)
     private String username;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 100)
     private String password;
 
-    @Column(nullable = false, columnDefinition = "boolean default true")
-    private Boolean isActive;
+    @Column(name = "is_active", columnDefinition = "boolean default true")
+    private Boolean isActive = true;
 
-    @Column(length = 1, columnDefinition = "smallint default 0")
-    private Integer loginAttemp;
+    @Column(name = "login_attemp", length = 1, columnDefinition = "smallint default 0")
+    private Integer loginAttemp = 0;
 
     @OneToOne
     @JoinColumn(name = "id_profile", nullable = false)
     private ProfileDao profile;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "bt_account_roles",
             joinColumns = @JoinColumn(name = "id_account"),
