@@ -1,4 +1,4 @@
-package basedomain.common;
+package basecomponent.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

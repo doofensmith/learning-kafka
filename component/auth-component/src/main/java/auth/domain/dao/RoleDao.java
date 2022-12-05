@@ -1,6 +1,6 @@
 package auth.domain.dao;
 
-import basedomain.common.BaseDaoSoftDelete;
+import basecomponent.common.BaseDaoSoftDelete;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,7 @@ import org.hibernate.annotations.Where;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.io.Serial;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,10 +19,10 @@ import java.io.Serializable;
 @Entity
 @Table(name = "t_role")
 @SQLDelete(sql = "update t_role set is_deleted=true, deleted_at=current_timestamp where id=?")
-@Where(clause = "is_deleted=true")
-public class RoleDao extends BaseDaoSoftDelete implements GrantedAuthority, Serializable {
+@Where(clause = "is_deleted=false")
+public class RoleDao extends BaseDaoSoftDelete implements GrantedAuthority {
 
-    private static final long serialVersionUID = -8783233358906752990L;
+    private static final long serialVersionUID = -130998012602094978L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,7 @@ public class RoleDao extends BaseDaoSoftDelete implements GrantedAuthority, Seri
 
     @Override
     public String getAuthority() {
-        return this.role;
+        return role;
     }
 
 }

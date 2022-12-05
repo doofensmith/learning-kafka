@@ -1,6 +1,6 @@
 package product.domain.dao;
 
-import basedomain.common.BaseDaoSoftDelete;
+import basecomponent.common.BaseDaoSoftDelete;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.SQLDelete;
