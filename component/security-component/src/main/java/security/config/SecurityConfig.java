@@ -21,19 +21,16 @@ import security.filter.SecurityFilter;
 import security.util.JwtTokenProvider;
 import security.util.UserService;
 
-@Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfiguration {
+public abstract class SecurityConfig extends WebSecurityConfiguration {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, JwtTokenProvider tokenProvider) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.httpBasic().and().cors().and().csrf().disable()
                 .authorizeHttpRequests()
                 .antMatchers("/auth/**").permitAll()
                 .anyRequest().authenticated().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(new SecurityFilter(userDetailsService(), tokenProvider), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new SecurityFilter(userDetailsService(), tokenProvider()), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
@@ -68,6 +65,11 @@ public class SecurityConfig extends WebSecurityConfiguration {
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserService();
+    }
+
+    @Bean
+    public JwtTokenProvider tokenProvider() {
+        return new JwtTokenProvider();
     }
 
     @Bean

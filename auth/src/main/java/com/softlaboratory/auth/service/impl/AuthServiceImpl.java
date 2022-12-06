@@ -11,7 +11,6 @@ import auth.repository.AccountRepository;
 import auth.repository.ProfileRepository;
 import auth.repository.RoleRepository;
 import basecomponent.utility.ResponseUtil;
-import com.softlaboratory.auth.security.JwtTokenProvider;
 import com.softlaboratory.auth.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import security.util.JwtTokenProvider;
 
 import java.util.Optional;
 

@@ -10,7 +10,6 @@ import org.hibernate.annotations.Where;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.io.Serial;
 
 @NoArgsConstructor
 @AllArgsConstructor

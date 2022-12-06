@@ -21,8 +21,6 @@ import java.util.Date;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Log4j2
-@Component
 public class JwtTokenProvider implements Serializable {
 
     private static final long serialVersionUID = -7535147790025631190L;
