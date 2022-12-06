@@ -2,6 +2,7 @@ package com.softlaboratory.auth.controller;
 
 import auth.domain.request.LoginRequest;
 import auth.domain.request.RegisterRequest;
+import auth.domain.response.LoginResponse;
 import com.softlaboratory.auth.service.AuthService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,15 @@ public class AuthController {
     public ResponseEntity<Object> register(@RequestBody RegisterRequest request) {
         try {
             return authService.register(request);
+        }catch (Exception e) {
+            throw e;
+        }
+    }
+
+    @PostMapping(value = "/validate-token")
+    public ResponseEntity<Object> validateToken(@RequestBody LoginResponse request) {
+        try {
+            return authService.validateToken(request);
         }catch (Exception e) {
             throw e;
         }

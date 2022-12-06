@@ -77,7 +77,7 @@ public class JwtTokenProvider implements Serializable {
         return (username.equals(userDetails.getUsername()) && !isExpired(token));
     }
 
-    private boolean isExpired(String token) {
+    public boolean isExpired(String token) {
         final Date expirationDate = getExpirationDate(token);
         return expirationDate.before(new Date());
     }

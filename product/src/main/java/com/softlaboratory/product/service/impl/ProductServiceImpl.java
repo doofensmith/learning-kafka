@@ -1,13 +1,17 @@
 package com.softlaboratory.product.service.impl;
 
+import basecomponent.common.ApiResponse;
 import basecomponent.utility.ResponseUtil;
 import com.softlaboratory.product.service.ProductService;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import product.domain.dao.ProductDao;
 import product.domain.dto.ProductDto;
 import product.repository.ProductRepository;

@@ -12,6 +12,8 @@ import auth.repository.ProfileRepository;
 import auth.repository.RoleRepository;
 import basecomponent.utility.ResponseUtil;
 import com.softlaboratory.auth.service.AuthService;
+import io.jsonwebtoken.ExpiredJwtException;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,7 @@ import security.util.JwtTokenProvider;
 
 import java.util.Optional;
 
+@Log4j2
 @Service
 public class AuthServiceImpl implements AuthService {
 
@@ -96,5 +99,23 @@ public class AuthServiceImpl implements AuthService {
         }
 
         return ResponseUtil.build(HttpStatus.OK, HttpStatus.OK.getReasonPhrase(), null);
+    }
+
+    @Override
+    public ResponseEntity<Object> validateToken(LoginResponse response) {
+        log.info("Starting validate token.");
+
+        log.debug("Token : {}", response.getToken());
+
+        log.debug("Check token expiration.");
+        if (tokenProvider.isExpired(response.getToken())) {
+            return ResponseUtil.build(HttpStatus.UNAUTHORIZED, HttpStatus.UNAUTHORIZED.getReasonPhrase(), null);
+        }else {
+            String username = tokenProvider.getUsername(response.getToken());
+            AccountDao accountDao = accountRepository.getDistinctTopByUsername(username);
+            Authentication authentication = tokenProvider.getAuthenticationToken(response.getToken(), null, accountDao);
+
+            return ResponseUtil.build(HttpStatus.OK, HttpStatus.OK.getReasonPhrase(), authentication);
+        }
     }
 }
