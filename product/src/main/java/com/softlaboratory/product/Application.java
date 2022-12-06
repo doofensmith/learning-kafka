@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @EntityScan(basePackages = {"product.domain.dao", "auth.domain.dao"})
 @EnableJpaRepositories(basePackages = {"product.repository", "auth.repository"})
-@ComponentScan(basePackages = "security")
 @SpringBootApplication
 public class Application {
 
