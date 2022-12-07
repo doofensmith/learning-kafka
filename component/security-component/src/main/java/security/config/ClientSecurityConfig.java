@@ -1,8 +1,5 @@
 package security.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,7 +10,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import security.filter.ClientSecurityFilter;
@@ -27,7 +23,7 @@ public abstract class ClientSecurityConfig extends WebSecurityConfiguration {
                 .authorizeHttpRequests()
                 .anyRequest().authenticated().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(new ClientSecurityFilter(tokenProvider(), webClient()), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new ClientSecurityFilter(tokenProvider()), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
@@ -45,21 +41,6 @@ public abstract class ClientSecurityConfig extends WebSecurityConfiguration {
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    @Bean
-    public WebClient webClient() {
-        return WebClient.builder()
-                .baseUrl("http://localhost:5001/api/auth")
-                .build();
-    }
-
-//    @Bean
-//    public ObjectMapper objectMapper() {
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        objectMapper.registerModule(new JavaTimeModule());
-//        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-//        return objectMapper;
-//    }
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {

@@ -7,7 +7,7 @@ import product.domain.dto.ProductDto;
 @Service
 public interface ProductService {
 
-    ResponseEntity<Object> getAll();
+    ResponseEntity<Object> getPage(Integer page, Integer size);
     ResponseEntity<Object> getById(Long id);
     ResponseEntity<Object> create(ProductDto request);
     ResponseEntity<Object> updateById(Long id, ProductDto request);

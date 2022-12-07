@@ -18,9 +18,11 @@ public class ProductController {
     private ProductService service;
 
     @GetMapping(value = "")
-    public ResponseEntity<Object> getAll() {
+    public ResponseEntity<Object> getAll(
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "size", required = false) Integer size) {
         try {
-            return service.getAll();
+            return service.getPage(page, size);
         }catch (Exception e) {
             log.error("Error {}", e.getMessage());
             throw e;
@@ -38,7 +40,7 @@ public class ProductController {
     }
 
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize(value = "hasAuthority('USER') or hasAuthority('ADMIN')")
+    @PreAuthorize(value = "hasAuthority('ADMIN')")
     public ResponseEntity<Object> create(@RequestBody ProductDto request) {
         try {
             return service.create(request);
