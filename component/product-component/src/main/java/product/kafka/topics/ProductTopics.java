@@ -1,17 +1,11 @@
 package product.kafka.topics;
 
-public enum ProductTopics {
+public class ProductTopics {
 
-    GET_ALL("product_get_all"),
-    GET_BY_ID("product_get_by_id"),
-    ADD_NEW("product_add_new"),
-    UPDATE("product_update"),
-    DELETE("product_delete");
-
-    public final String topic;
-
-    ProductTopics(String topic) {
-        this.topic = topic;
-    }
+    public static final String GET_ALL = "product_get_all";
+    public static final String GET_BY_ID = "product_get_by_id";
+    public static final String ADD_NEW = "product_add_new";
+    public static final String UPDATE = "product_update";
+    public static final String DELETE = "product_delete";
 
 }

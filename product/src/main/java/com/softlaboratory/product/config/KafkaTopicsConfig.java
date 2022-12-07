@@ -30,7 +30,7 @@ public class KafkaTopicsConfig {
     @Bean
     public NewTopic addNewProductTopic() {
         return TopicBuilder
-                .name(ProductTopics.ADD_NEW.topic)
+                .name(ProductTopics.ADD_NEW)
 //                .replicas(3)
 //                .partitions(3)
                 .build();
@@ -39,7 +39,7 @@ public class KafkaTopicsConfig {
     @Bean
     public NewTopic updateProductTopic() {
         return TopicBuilder
-                .name(ProductTopics.UPDATE.topic)
+                .name(ProductTopics.UPDATE)
 //                .replicas(3)
 //                .partitions(3)
                 .build();
@@ -48,7 +48,7 @@ public class KafkaTopicsConfig {
     @Bean
     public NewTopic deleteProductTopic() {
         return TopicBuilder
-                .name(ProductTopics.DELETE.topic)
+                .name(ProductTopics.DELETE)
 //                .replicas(3)
 //                .partitions(3)
                 .build();

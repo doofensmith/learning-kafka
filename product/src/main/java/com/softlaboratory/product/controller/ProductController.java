@@ -1,5 +1,6 @@
 package com.softlaboratory.product.controller;
 
+import com.softlaboratory.product.kafka.producer.KafkaProducer;
 import com.softlaboratory.product.service.ProductService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class ProductController {
 
     @Autowired
     private ProductService service;
+
+    @Autowired
+    private KafkaProducer producer;
 
     @GetMapping(value = "")
     public ResponseEntity<Object> getAll(
@@ -43,7 +47,7 @@ public class ProductController {
     @PreAuthorize(value = "hasAuthority('ADMIN')")
     public ResponseEntity<Object> create(@RequestBody ProductDto request) {
         try {
-            return service.create(request);
+            return producer.sendResponseOfCreate(request);
         }catch (Exception e) {
             log.error("Error {}", e.getMessage());
             throw e;
@@ -53,7 +57,7 @@ public class ProductController {
     @PatchMapping(value = "/{id}")
     public ResponseEntity<Object> updateById(@PathVariable Long id, @RequestBody ProductDto request) {
         try {
-            return service.updateById(id, request);
+            return producer.sendResponseOfUpdateById(id, request);
         }catch (Exception e) {
             log.error("Error {}", e.getMessage());
             throw e;
@@ -63,7 +67,7 @@ public class ProductController {
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Object> deleteById(@PathVariable Long id) {
         try {
-            return service.deleteById(id);
+            return producer.sendResponseOfDeleteById(id);
         }catch (Exception e) {
             log.error("Error {}", e.getMessage());
             throw e;
