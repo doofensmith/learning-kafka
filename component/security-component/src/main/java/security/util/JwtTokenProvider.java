@@ -56,7 +56,7 @@ public class JwtTokenProvider implements Serializable {
                 .compact();
     }
 
-    public Authentication getAuthenticationToken(final String token, final Authentication authentication, final UserDetails userDetails) {
+    public Authentication getAuthenticationToken(final String token, final UserDetails userDetails) {
         final JwtParser jwtParser = Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build();

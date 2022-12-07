@@ -47,7 +47,7 @@ public class SecurityFilter extends GenericFilterBean {
                 AccountDao account = (AccountDao) userDetailsService.loadUserByUsername(username);
 
                 if (tokenProvider.isTokenValid(token, account)) {
-                    Authentication authenticationToken = tokenProvider.getAuthenticationToken(token, authentication, account);
+                    Authentication authenticationToken = tokenProvider.getAuthenticationToken(token, account);
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 }
             }
