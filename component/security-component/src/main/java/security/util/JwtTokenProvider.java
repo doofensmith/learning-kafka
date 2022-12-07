@@ -1,4 +1,4 @@
-package com.softlaboratory.auth.security;
+package security.util;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -21,8 +21,6 @@ import java.util.Date;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Log4j2
-@Component
 public class JwtTokenProvider implements Serializable {
 
     private static final long serialVersionUID = -7535147790025631190L;
@@ -58,7 +56,7 @@ public class JwtTokenProvider implements Serializable {
                 .compact();
     }
 
-    public Authentication getAuthenticationToken(final String token, final Authentication authentication, final UserDetails userDetails) {
+    public Authentication getAuthenticationToken(final String token, final UserDetails userDetails) {
         final JwtParser jwtParser = Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build();
@@ -74,12 +72,28 @@ public class JwtTokenProvider implements Serializable {
         return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), authorities);
     }
 
+    public Authentication getAuthenticationTokenClient(final String token) {
+        final JwtParser jwtParser = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build();
+
+        final Jws<Claims> claimsJws = jwtParser.parseClaimsJws(token);
+
+        final Claims claims = claimsJws.getBody();
+
+        final Collection<? extends GrantedAuthority> authorities = Arrays.stream(claims.get(authKey).toString().split(","))
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+
+        return new UsernamePasswordAuthenticationToken(claims.getSubject(), null, authorities);
+    }
+
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = getUsername(token);
         return (username.equals(userDetails.getUsername()) && !isExpired(token));
     }
 
-    private boolean isExpired(String token) {
+    public boolean isExpired(String token) {
         final Date expirationDate = getExpirationDate(token);
         return expirationDate.before(new Date());
     }

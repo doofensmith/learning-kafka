@@ -9,6 +9,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +19,9 @@ import javax.persistence.*;
 @Table(name = "t_profile")
 @SQLDelete(sql = "update t_profile set is_deleted=true, deleted_at=current_timestamp where id=?")
 @Where(clause = "is_deleted=false")
-public class ProfileDao extends BaseDaoSoftDelete {
+public class ProfileDao extends BaseDaoSoftDelete implements Serializable {
+
+    private static final long serialVersionUID = 1987701290912451710L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

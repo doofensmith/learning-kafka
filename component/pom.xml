@@ -20,6 +20,7 @@
 	<modules>
 		<module>base-component</module>
 		<module>auth-component</module>
+		<module>security-component</module>
 		<module>customer-component</module>
 		<module>notification-component</module>
 		<module>payment-component</module>
@@ -42,6 +43,11 @@
 			<dependency>
 				<groupId>org.projectlombok</groupId>
 				<artifactId>lombok</artifactId>
+			</dependency>
+			<!--		WEB CLIENT-->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-webflux</artifactId>
 			</dependency>
 		</dependencies>
 

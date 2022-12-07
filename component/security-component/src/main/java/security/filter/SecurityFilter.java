@@ -1,4 +1,4 @@
-package com.softlaboratory.auth.security;
+package security.filter;
 
 import auth.domain.dao.AccountDao;
 import basecomponent.constant.AppConstant;
@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.filter.GenericFilterBean;
+import security.util.JwtTokenProvider;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -46,7 +47,7 @@ public class SecurityFilter extends GenericFilterBean {
                 AccountDao account = (AccountDao) userDetailsService.loadUserByUsername(username);
 
                 if (tokenProvider.isTokenValid(token, account)) {
-                    Authentication authenticationToken = tokenProvider.getAuthenticationToken(token, authentication, account);
+                    Authentication authenticationToken = tokenProvider.getAuthenticationToken(token, account);
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 }
             }
