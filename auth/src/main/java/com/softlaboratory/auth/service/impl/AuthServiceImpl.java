@@ -1,5 +1,6 @@
 package com.softlaboratory.auth.service.impl;
 
+import antlr.TokenStreamIOException;
 import auth.domain.constant.RoleEnum;
 import auth.domain.dao.AccountDao;
 import auth.domain.dao.ProfileDao;
@@ -10,6 +11,7 @@ import auth.domain.response.LoginResponse;
 import auth.repository.AccountRepository;
 import auth.repository.ProfileRepository;
 import auth.repository.RoleRepository;
+import basecomponent.common.ApiResponse;
 import basecomponent.utility.ResponseUtil;
 import com.softlaboratory.auth.service.AuthService;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -25,6 +27,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 import security.util.JwtTokenProvider;
 
 import java.util.Optional;
@@ -102,20 +106,41 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public ResponseEntity<Object> validateToken(LoginResponse response) {
+    public ResponseEntity<Object> validateToken(String token) {
         log.info("Starting validate token.");
 
-        log.debug("Token : {}", response.getToken());
+        log.debug("Token : {}", token);
 
         log.debug("Check token expiration.");
-        if (tokenProvider.isExpired(response.getToken())) {
-            return ResponseUtil.build(HttpStatus.UNAUTHORIZED, HttpStatus.UNAUTHORIZED.getReasonPhrase(), null);
-        }else {
-            String username = tokenProvider.getUsername(response.getToken());
-            AccountDao accountDao = accountRepository.getDistinctTopByUsername(username);
-            Authentication authentication = tokenProvider.getAuthenticationToken(response.getToken(), null, accountDao);
+        if (tokenProvider.isExpired(token)) {
+            log.debug("Token expired.");
 
-            return ResponseUtil.build(HttpStatus.OK, HttpStatus.OK.getReasonPhrase(), authentication);
+            log.info("Token invalid.");
+            throw new BadCredentialsException("Invalid token!");
+        }else {
+            String username = tokenProvider.getUsername(token);
+            AccountDao accountDao = accountRepository.getDistinctTopByUsername(username);
+            log.debug("Account dao : {}", accountDao);
+
+            log.info("Token valid.");
+            return ResponseUtil.build(HttpStatus.OK, HttpStatus.OK.getReasonPhrase(), accountDao);
         }
+    }
+
+    @Override
+    public ResponseEntity<Object> test() {
+        WebClient webClient = WebClient.create("http://localhost:5001");
+        LoginRequest request = LoginRequest.builder()
+                .username("admin1")
+                .password("admin1")
+                .build();
+
+        ApiResponse response = webClient.post()
+                .uri("/api/auth/login")
+                .body(Mono.just(request), LoginRequest.class)
+                .retrieve()
+                .bodyToFlux(ApiResponse.class).blockFirst();
+
+        return new ResponseEntity<>(response, HttpStatus.BANDWIDTH_LIMIT_EXCEEDED);
     }
 }
