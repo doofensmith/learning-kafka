@@ -34,7 +34,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\":\"dimas\",\r\n    \"password\":\"dimas123\"\r\n}",
+							"raw": "{\r\n    \"username\":\"admin1\",\r\n    \"password\":\"admin1\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -170,18 +170,20 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}{{product_port}}{{product_context}}?page=0&size=10",
+							"raw": "{{base_url}}{{product_port}}{{product_context}}",
 							"host": [
 								"{{base_url}}{{product_port}}{{product_context}}"
 							],
 							"query": [
 								{
 									"key": "page",
-									"value": "0"
+									"value": "0",
+									"disabled": true
 								},
 								{
 									"key": "size",
-									"value": "10"
+									"value": "100",
+									"disabled": true
 								}
 							]
 						}
@@ -243,12 +245,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}{{product_port}}{{product_context}}/1",
+							"raw": "{{base_url}}{{product_port}}{{product_context}}/2000",
 							"host": [
 								"{{base_url}}{{product_port}}{{product_context}}"
 							],
 							"path": [
-								"1"
+								"2000"
 							]
 						}
 					},
@@ -260,12 +262,74 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}{{product_port}}{{product_context}}/1",
+							"raw": "{{base_url}}{{product_port}}{{product_context}}/2000",
 							"host": [
 								"{{base_url}}{{product_port}}{{product_context}}"
 							],
 							"path": [
-								"1"
+								"2000"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "notification",
+			"item": [
+				{
+					"name": "get-notification",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{notification_port}}{{notification_context}}",
+							"host": [
+								"{{base_url}}{{notification_port}}{{notification_context}}"
+							],
+							"query": [
+								{
+									"key": "receiver",
+									"value": "admin1",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "push-notification",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\":\"Test\",\r\n    \"publisher\":\"\",\r\n    \"receiver\":\"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}{{notification_port}}{{notification_context}}/push",
+							"host": [
+								"{{base_url}}{{notification_port}}{{notification_context}}"
+							],
+							"path": [
+								"push"
 							]
 						}
 					},
@@ -333,6 +397,16 @@
 		{
 			"key": "product_context",
 			"value": "/api/product",
+			"type": "default"
+		},
+		{
+			"key": "notification_port",
+			"value": ":5003",
+			"type": "default"
+		},
+		{
+			"key": "notification_context",
+			"value": "/api/notification",
 			"type": "default"
 		}
 	]

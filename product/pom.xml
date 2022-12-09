@@ -118,6 +118,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
+<!--		COMPONENT-->
 		<dependency>
 			<groupId>com.softlaboratory</groupId>
 			<artifactId>base-component</artifactId>
@@ -136,6 +137,11 @@
 		<dependency>
 			<groupId>com.softlaboratory</groupId>
 			<artifactId>auth-component</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.softlaboratory</groupId>
+			<artifactId>notification-component</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
