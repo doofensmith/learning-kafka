@@ -47,7 +47,7 @@ public class ProductController {
     @PreAuthorize(value = "hasAuthority('ADMIN')")
     public ResponseEntity<Object> create(@RequestBody ProductDto request) {
         try {
-            return producer.sendResponseOfCreate(request);
+            return producer.sendCreateDataRequest(request);
         }catch (Exception e) {
             log.error("Error {}", e.getMessage());
             throw e;
@@ -57,7 +57,7 @@ public class ProductController {
     @PatchMapping(value = "/{id}")
     public ResponseEntity<Object> updateById(@PathVariable Long id, @RequestBody ProductDto request) {
         try {
-            return producer.sendResponseOfUpdateById(id, request);
+            return producer.sendUpdateByIdRequest(id, request);
         }catch (Exception e) {
             log.error("Error {}", e.getMessage());
             throw e;
@@ -67,7 +67,7 @@ public class ProductController {
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Object> deleteById(@PathVariable Long id) {
         try {
-            return producer.sendResponseOfDeleteById(id);
+            return producer.sendDeleteByIdRequest(id);
         }catch (Exception e) {
             log.error("Error {}", e.getMessage());
             throw e;

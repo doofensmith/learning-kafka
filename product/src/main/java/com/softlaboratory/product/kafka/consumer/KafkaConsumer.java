@@ -1,20 +1,19 @@
 package com.softlaboratory.product.kafka.consumer;
 
-import basecomponent.common.ApiResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softlaboratory.product.service.ProductService;
 import lombok.extern.log4j.Log4j2;
+import notification.constant.NotificationConstant;
+import notification.constant.NotificationTopics;
 import notification.domain.dto.NotificationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 import product.domain.dto.ProductDto;
-import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
@@ -31,62 +30,158 @@ public class KafkaConsumer {
     private ObjectMapper objectMapper;
 
     @Autowired
-    private WebClient webClient;
+    private KafkaTemplate<String, String> template;
 
-    @KafkaListener(topics = ADD_NEW, groupId = "product_consumer_addnew_group_1")
+    @KafkaListener(topics = ADD_NEW)
     void consumeAddProductRequest(String request) throws JsonProcessingException {
+        log.info("Request received : {}", request);
+
+        log.debug("Convert request to map.");
+        Map<String, Object> data = objectMapper.readValue(request, Map.class);
+
+        log.debug("Convert sender username.");
+        String username = objectMapper.convertValue(data.get("username"), String.class);
+
+        log.debug("Convert request body.");
+        ProductDto dto = objectMapper.convertValue(data.get("request"), ProductDto.class);
+
         try {
-            log.info("Request received : {}", request);
-            ProductDto dto = objectMapper.readValue(request, ProductDto.class);
-
+            log.debug("Execute service.");
             ResponseEntity<Object> apiResponse = service.create(dto);
-            log.info("Response : {}", apiResponse.getBody());
+            log.debug("Response : {}", apiResponse.getBody());
 
+            log.debug("Send request to notification.");
             if (apiResponse.getStatusCode() == HttpStatus.OK) {
-                log.info("");
                 NotificationDto notifReq = NotificationDto.builder()
                         .content("Add new product success.")
-                        .publisher("SYSTEM")
-                        .receiver("EVERYONE")
+                        .publisher(NotificationConstant.defaultPublisher)
+                        .receiver(username)
                         .build();
 
+                String message = objectMapper.writeValueAsString(notifReq);
+                template.send(NotificationTopics.NOTIF_ADD_PRODUCT, message);
+            }else {
+                NotificationDto notifReq = NotificationDto.builder()
+                        .content("Add new product failed. Message "+apiResponse.getStatusCode())
+                        .publisher(NotificationConstant.defaultPublisher)
+                        .receiver(username)
+                        .build();
 
-                String token = SecurityContextHolder.getContext().getAuthentication().getName();
-                log.info(token);
-//                ApiResponse notif = webClient.post()
-//                        .uri("/api/notification/push")
-//                        .headers(httpHeaders -> {
-//                            httpHeaders.setBearerAuth("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbjEiLCJyb2xlcyI6IlVTRVIsQURNSU4iLCJpYXQiOjE2NzA1NzM1NjEsImV4cCI6MTY3MDU3NDE2MX0.haFqGeWKO3nnqcAizhnZWidosCJZbOtxXket_9KqKYI");
-//                        })
-//                        .body(Mono.just(notifReq), NotificationDto.class)
-//                        .retrieve()
-//                        .bodyToMono(ApiResponse.class)
-//                        .block();
-
+                String message = objectMapper.writeValueAsString(notifReq);
+                template.send(NotificationTopics.NOTIF_ADD_PRODUCT, message);
             }
         }catch (Exception e) {
-            throw e;
+            NotificationDto notifReq = NotificationDto.builder()
+                    .content("Add new product failed with error : "+e.getMessage())
+                    .publisher(NotificationConstant.defaultPublisher)
+                    .receiver(username)
+                    .build();
+
+            String message = objectMapper.writeValueAsString(notifReq);
+            template.send(NotificationTopics.NOTIF_ADD_PRODUCT, message);
         }
     }
 
-    @KafkaListener(topics = UPDATE, groupId = "product_consumer_update_group_1")
+    @KafkaListener(topics = UPDATE)
     void consumeUpdateProductRequest(String request) throws JsonProcessingException {
-        log.info("Received request : {}", request);
+        log.debug("Received request : {}", request);
+
+        log.debug("Convert reqeust to map.");
         Map<String, Object> map = objectMapper.readValue(request, Map.class);
+
+        log.debug("Convert request id.");
         Long id = objectMapper.convertValue(map.get("id"), Long.class);
+
+        log.debug("Convert request body.");
         ProductDto dto = objectMapper.convertValue(map.get("request"), ProductDto.class);
 
-        ResponseEntity<Object> response = service.updateById(id, dto);
-        log.info("Response : {}", response.getBody());
+        log.debug("Get sender user.");
+        String sender = objectMapper.convertValue(map.get("sender"), String.class);
+
+        try {
+            log.debug("Execute service.");
+            ResponseEntity<Object> response = service.updateById(id, dto);
+            log.debug("Response : {}", response.getBody());
+
+            if (response.getStatusCode() == HttpStatus.OK) {
+                NotificationDto notifReq = NotificationDto.builder()
+                        .content("Update product success.")
+                        .publisher(NotificationConstant.defaultPublisher)
+                        .receiver(sender)
+                        .build();
+
+                String message = objectMapper.writeValueAsString(notifReq);
+                template.send(NotificationTopics.NOTIF_ADD_PRODUCT, message);
+            }else {
+                NotificationDto notifReq = NotificationDto.builder()
+                        .content("Update product failed. Message "+response.getStatusCode())
+                        .publisher(NotificationConstant.defaultPublisher)
+                        .receiver(sender)
+                        .build();
+
+                String message = objectMapper.writeValueAsString(notifReq);
+                template.send(NotificationTopics.NOTIF_ADD_PRODUCT, message);
+            }
+
+        }catch (Exception e) {
+            NotificationDto notifReq = NotificationDto.builder()
+                    .content("Update product failed with error : "+e.getMessage())
+                    .publisher(NotificationConstant.defaultPublisher)
+                    .receiver(sender)
+                    .build();
+
+            String message = objectMapper.writeValueAsString(notifReq);
+            template.send(NotificationTopics.NOTIF_ADD_PRODUCT, message);
+        }
     }
 
-    @KafkaListener(topics = DELETE, groupId = "product_consumer_delete_group_1")
-    void consumeDeleteProductRequest(String request) {
-        log.info("Received request : {}", request);
-        Long id = objectMapper.convertValue(request, Long.class);
+    @KafkaListener(topics = DELETE)
+    void consumeDeleteProductRequest(String request) throws JsonProcessingException {
+        log.debug("Received request : {}", request);
 
-        ResponseEntity<Object> response = service.deleteById(id);
-        log.info("Response : {}", response.getBody());
+        log.debug("Convert request to map.");
+        Map<String, Object> data = objectMapper.readValue(request, Map.class);
+
+        log.debug("Convert id request.");
+        Long id = objectMapper.convertValue(data.get("id"), Long.class);
+
+        log.debug("Convert sender user.");
+        String sender = objectMapper.convertValue(data.get("sender"), String.class);
+
+        try {
+            log.debug("Execute service.");
+            ResponseEntity<Object> response = service.deleteById(id);
+            log.debug("Response : {}", response.getBody());
+
+            if (response.getStatusCode() == HttpStatus.OK) {
+                NotificationDto notifReq = NotificationDto.builder()
+                        .content("Delete product success.")
+                        .publisher(NotificationConstant.defaultPublisher)
+                        .receiver(sender)
+                        .build();
+
+                String message = objectMapper.writeValueAsString(notifReq);
+                template.send(NotificationTopics.NOTIF_ADD_PRODUCT, message);
+            }else {
+                NotificationDto notifReq = NotificationDto.builder()
+                        .content("Delete product failed. Message "+response.getStatusCode())
+                        .publisher(NotificationConstant.defaultPublisher)
+                        .receiver(sender)
+                        .build();
+
+                String message = objectMapper.writeValueAsString(notifReq);
+                template.send(NotificationTopics.NOTIF_ADD_PRODUCT, message);
+            }
+        }catch (Exception e) {
+            NotificationDto notifReq = NotificationDto.builder()
+                    .content("Delete product failed with error : "+e.getMessage())
+                    .publisher(NotificationConstant.defaultPublisher)
+                    .receiver(sender)
+                    .build();
+
+            String message = objectMapper.writeValueAsString(notifReq);
+            template.send(NotificationTopics.NOTIF_ADD_PRODUCT, message);
+        }
     }
 
 }

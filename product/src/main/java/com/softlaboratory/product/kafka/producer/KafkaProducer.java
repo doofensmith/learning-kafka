@@ -57,13 +57,16 @@ public class KafkaProducer {
 //        }
 //    }
 
-    public ResponseEntity<Object> sendResponseOfCreate(ProductDto request) {
+    public ResponseEntity<Object> sendCreateDataRequest(ProductDto request) {
         try {
-            String token = SecurityContextHolder.getContext().toString();
-            log.info("Token : {}", token);
+            String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+            log.info("Request sender username : {}", username);
 
-            Map<String, Object> map = new HashMap<>();
-            String message = mapper.writeValueAsString(request);
+            Map<String, Object> data = new HashMap<>();
+            data.put("username", username);
+            data.put("request", request);
+
+            String message = mapper.writeValueAsString(data);
             template.send(ProductTopics.ADD_NEW, message);
 
             return ResponseUtil.build(HttpStatus.OK, "Add product request sent.", null);
@@ -72,11 +75,16 @@ public class KafkaProducer {
         }
     }
 
-    public ResponseEntity<Object> sendResponseOfUpdateById(Long id, ProductDto request) {
+    public ResponseEntity<Object> sendUpdateByIdRequest(Long id, ProductDto request) {
         try {
+            String sender = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+            log.info("Request sender username : {}", sender);
+
             Map<String, Object> req = new HashMap<>();
             req.put("id", id);
+            req.put("sender", sender);
             req.put("request", request);
+
             String message = mapper.writeValueAsString(req);
             template.send(ProductTopics.UPDATE, message);
 
@@ -86,9 +94,16 @@ public class KafkaProducer {
         }
     }
 
-    public ResponseEntity<Object> sendResponseOfDeleteById(Long id) {
+    public ResponseEntity<Object> sendDeleteByIdRequest(Long id) {
         try {
-            String message = mapper.writeValueAsString(id);
+            String sender = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+            log.info("Request sender username : {}", sender);
+
+            Map<String, Object> data = new HashMap<>();
+            data.put("sender", sender);
+            data.put("id", id);
+
+            String message = mapper.writeValueAsString(data);
             template.send(ProductTopics.DELETE, message);
 
             return ResponseUtil.build(HttpStatus.OK, "Delete product request sent.", null);
