@@ -52,33 +52,12 @@ public class KafkaConsumer {
 
             log.debug("Send request to notification.");
             if (apiResponse.getStatusCode() == HttpStatus.OK) {
-                NotificationDto notifReq = NotificationDto.builder()
-                        .content("Add new product success.")
-                        .publisher(NotificationConstant.defaultPublisher)
-                        .receiver(username)
-                        .build();
-
-                String message = objectMapper.writeValueAsString(notifReq);
-                template.send(NotificationTopics.NOTIF_ADD_PRODUCT, message);
+                sendNotificationRequest("Add new product success.", username);
             }else {
-                NotificationDto notifReq = NotificationDto.builder()
-                        .content("Add new product failed. Message "+apiResponse.getStatusCode())
-                        .publisher(NotificationConstant.defaultPublisher)
-                        .receiver(username)
-                        .build();
-
-                String message = objectMapper.writeValueAsString(notifReq);
-                template.send(NotificationTopics.NOTIF_ADD_PRODUCT, message);
+                sendNotificationRequest("Add new product failed. Message "+apiResponse.getStatusCode(), username);
             }
         }catch (Exception e) {
-            NotificationDto notifReq = NotificationDto.builder()
-                    .content("Add new product failed with error : "+e.getMessage())
-                    .publisher(NotificationConstant.defaultPublisher)
-                    .receiver(username)
-                    .build();
-
-            String message = objectMapper.writeValueAsString(notifReq);
-            template.send(NotificationTopics.NOTIF_ADD_PRODUCT, message);
+            sendNotificationRequest("Add new product failed with error : "+e.getMessage(), username);
         }
     }
 
@@ -104,34 +83,13 @@ public class KafkaConsumer {
             log.debug("Response : {}", response.getBody());
 
             if (response.getStatusCode() == HttpStatus.OK) {
-                NotificationDto notifReq = NotificationDto.builder()
-                        .content("Update product success.")
-                        .publisher(NotificationConstant.defaultPublisher)
-                        .receiver(sender)
-                        .build();
-
-                String message = objectMapper.writeValueAsString(notifReq);
-                template.send(NotificationTopics.NOTIF_ADD_PRODUCT, message);
+                sendNotificationRequest("Update product success.", sender);
             }else {
-                NotificationDto notifReq = NotificationDto.builder()
-                        .content("Update product failed. Message "+response.getStatusCode())
-                        .publisher(NotificationConstant.defaultPublisher)
-                        .receiver(sender)
-                        .build();
-
-                String message = objectMapper.writeValueAsString(notifReq);
-                template.send(NotificationTopics.NOTIF_ADD_PRODUCT, message);
+                sendNotificationRequest("Update product failed. Message "+response.getStatusCode(), sender);
             }
 
         }catch (Exception e) {
-            NotificationDto notifReq = NotificationDto.builder()
-                    .content("Update product failed with error : "+e.getMessage())
-                    .publisher(NotificationConstant.defaultPublisher)
-                    .receiver(sender)
-                    .build();
-
-            String message = objectMapper.writeValueAsString(notifReq);
-            template.send(NotificationTopics.NOTIF_ADD_PRODUCT, message);
+            sendNotificationRequest("Update product failed with error : "+e.getMessage(), sender);
         }
     }
 
@@ -154,34 +112,24 @@ public class KafkaConsumer {
             log.debug("Response : {}", response.getBody());
 
             if (response.getStatusCode() == HttpStatus.OK) {
-                NotificationDto notifReq = NotificationDto.builder()
-                        .content("Delete product success.")
-                        .publisher(NotificationConstant.defaultPublisher)
-                        .receiver(sender)
-                        .build();
-
-                String message = objectMapper.writeValueAsString(notifReq);
-                template.send(NotificationTopics.NOTIF_ADD_PRODUCT, message);
+                sendNotificationRequest("Delete product success.", sender);
             }else {
-                NotificationDto notifReq = NotificationDto.builder()
-                        .content("Delete product failed. Message "+response.getStatusCode())
-                        .publisher(NotificationConstant.defaultPublisher)
-                        .receiver(sender)
-                        .build();
-
-                String message = objectMapper.writeValueAsString(notifReq);
-                template.send(NotificationTopics.NOTIF_ADD_PRODUCT, message);
+                sendNotificationRequest("Delete product failed. Message "+response.getStatusCode(), sender);
             }
         }catch (Exception e) {
-            NotificationDto notifReq = NotificationDto.builder()
-                    .content("Delete product failed with error : "+e.getMessage())
-                    .publisher(NotificationConstant.defaultPublisher)
-                    .receiver(sender)
-                    .build();
-
-            String message = objectMapper.writeValueAsString(notifReq);
-            template.send(NotificationTopics.NOTIF_ADD_PRODUCT, message);
+            sendNotificationRequest("Delete product failed with error : "+e.getMessage(), sender);
         }
+    }
+
+    private void sendNotificationRequest(String content, String receiver) throws JsonProcessingException {
+        NotificationDto notifReq = NotificationDto.builder()
+                .content(content)
+                .publisher(NotificationConstant.defaultPublisher)
+                .receiver(receiver)
+                .build();
+
+        String message = objectMapper.writeValueAsString(notifReq);
+        template.send(NotificationTopics.NOTIF_ADD_PRODUCT, message);
     }
 
 }

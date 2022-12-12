@@ -34,7 +34,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\":\"admin1\",\r\n    \"password\":\"admin1\"\r\n}",
+							"raw": "{\r\n    \"username\":\"dimas\",\r\n    \"password\":\"dimas123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -231,7 +231,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "update-product-by-id",
 					"request": {
 						"method": "PATCH",
 						"header": [],
@@ -245,19 +245,19 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}{{product_port}}{{product_context}}/2000",
+							"raw": "{{base_url}}{{product_port}}{{product_context}}/200000",
 							"host": [
 								"{{base_url}}{{product_port}}{{product_context}}"
 							],
 							"path": [
-								"2000"
+								"200000"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "delete-product-by-id",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -291,7 +291,7 @@
 							"query": [
 								{
 									"key": "receiver",
-									"value": "admin1",
+									"value": "dimas",
 									"disabled": true
 								},
 								{
