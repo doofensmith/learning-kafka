@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import product.domain.dto.ProductDto;
 import product.kafka.topics.ProductTopics;
+import transaction.constant.TransactionTopic;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -97,6 +98,16 @@ public class KafkaProducer {
 
         String message = mapper.writeValueAsString(notifReq);
         template.send(NotificationTopics.NOTIF_ADD_PRODUCT, message);
+    }
+
+    public void sendProductByIdToTransaction(Long idTransaction, ProductDto productDto) throws JsonProcessingException {
+        Map<String, Object> data = new HashMap<>();
+        data.put("id_transaction", idTransaction);
+        data.put("product", productDto);
+
+        String message = mapper.writeValueAsString(data);
+        template.send(TransactionTopic.NEW_TRANSACTION_REQUEST, message);
+
     }
 
 }

@@ -1,6 +1,7 @@
 package com.softlaboratory.customer.kafka.consumer;
 
 import auth.constant.AuthTopics;
+import basecomponent.common.ApiResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softlaboratory.customer.kafka.producer.KafkaProducer;
@@ -63,11 +64,21 @@ public class KafkaConsumer {
         log.debug("Received message : {}", message);
 
         log.debug("Convert message to object.");
-        TransactionRequest transactionRequest = objectMapper.readValue(message, TransactionRequest.class);
+        Map<String, Object> messageObject = objectMapper.readValue(message, Map.class);
+
+        log.debug("Get id account.");
+        Long idAccount = objectMapper.convertValue(messageObject.get("id_account"), Long.class);
 
         log.debug("Execute service.");
-        ResponseEntity<Object> response = customerService.getCustomerByIdAccount(transactionRequest.getIdAccount());
+        ResponseEntity<Object> response = customerService.getCustomerByIdAccount(idAccount);
 
+        if (response.getStatusCode() == HttpStatus.OK) {
+            kafkaProducer.sendMessageToCheckProductService(message);
+        }else {
+            ApiResponse apiResponse = objectMapper.convertValue(response.getBody(), ApiResponse.class);
+            CustomerDto customerDto = objectMapper.convertValue(apiResponse.getData(), CustomerDto.class);
+            log.debug("Customer DTO : {}", customerDto);
+        }
         
     }
 

@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import transaction.constant.TransactionTopic;
 import transaction.domain.request.TransactionRequest;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class KafkaProducer {
 
@@ -20,11 +23,14 @@ public class KafkaProducer {
     @Autowired
     private ObjectMapper objectMapper;
 
-    public ResponseEntity<Object> sendTransactionRequest(TransactionRequest request) throws JsonProcessingException {
-        String message = objectMapper.writeValueAsString(request);
-        kafkaTemplate.send(TransactionTopic.NEW_TRANSACTION_CHECK_ACCOUNT, message);
+    public void sendTransactionRequest(Long idTransaction, TransactionRequest request) throws JsonProcessingException {
+        Map<String, Object> data = new HashMap<>();
+        data.put("id_transaction", idTransaction);
+        data.put("id_product", request.getIdProduct());
+        data.put("id_account", request.getIdAccount());
 
-        return ResponseUtil.build(HttpStatus.OK, "New transaction request published.", null);
+        String message = objectMapper.writeValueAsString(data);
+        kafkaTemplate.send(TransactionTopic.NEW_TRANSACTION_CHECK_ACCOUNT, message);
     }
 
 }

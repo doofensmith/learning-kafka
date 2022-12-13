@@ -16,4 +16,9 @@ public interface TransactionRepository extends JpaRepository<TransactionDao, Lon
     @Query("update TransactionDao t set t.status = ?1 where t.id = ?2")
     void updateStatusByIdEquals(@NonNull String status, Long id);
 
+    @Transactional
+    @Modifying
+    @Query("update TransactionDao t set t.total = ?1 where t.id = ?2")
+    int updateTotalByIdEquals(@NonNull Double total, Long id);
+
 }

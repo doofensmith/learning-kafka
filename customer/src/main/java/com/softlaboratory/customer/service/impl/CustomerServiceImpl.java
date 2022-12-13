@@ -31,7 +31,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public ResponseEntity<Object> getCustomerByIdAccount(Long idAccount) {
         log.debug("Starting get customer by id account.");
-        log.debug("Id account request : {}");
+        log.debug("Id account request : {}", idAccount);
 
         log.debug("Find customer by id account with repository.");
         Optional<CustomerDao> customerDao = customerRepository.findByIdAccountEquals(idAccount);

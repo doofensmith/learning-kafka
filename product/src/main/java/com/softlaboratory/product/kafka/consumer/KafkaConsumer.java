@@ -1,5 +1,6 @@
 package com.softlaboratory.product.kafka.consumer;
 
+import basecomponent.common.ApiResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softlaboratory.product.kafka.producer.KafkaProducer;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import product.domain.dto.ProductDto;
+import transaction.constant.TransactionTopic;
 
 import java.util.Map;
 
@@ -116,6 +118,34 @@ public class KafkaConsumer {
         }catch (Exception e) {
             kafkaProducer.sendNotificationRequest("Delete product failed with error : "+e.getMessage(), sender);
         }
+    }
+
+    @KafkaListener(topics = TransactionTopic.NEW_TRANSACTION_CHECK_PRODUCT)
+    void consumeCustomerCheckProduct(String message) throws JsonProcessingException {
+        log.debug("Received message : {}", message);
+
+        log.debug("Convert message to object data.");
+        Map<String, Object> dataObject = objectMapper.readValue(message, Map.class);
+
+        log.debug("Get product id.");
+        Long idProduct = objectMapper.convertValue(dataObject.get("id_product"), Long.class);
+
+        log.debug("Execute service get product by id.");
+        ResponseEntity<Object> response = service.getById(idProduct);
+
+        if (response.getStatusCode() == HttpStatus.OK) {
+            log.debug("Get data from service.");
+            ApiResponse apiResponse = objectMapper.convertValue(response.getBody(), ApiResponse.class);
+            ProductDto productDto = objectMapper.convertValue(apiResponse.getData(), ProductDto.class);
+
+            log.debug("Get transaction id.");
+            Long idTransaction = objectMapper.convertValue(dataObject.get("id_transaction"), Long.class);
+
+            log.debug("Send message to transaction.");
+            kafkaProducer.sendProductByIdToTransaction(idTransaction, productDto);
+
+        }
+
     }
 
 }

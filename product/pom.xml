@@ -144,6 +144,11 @@
 			<artifactId>notification-component</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>com.softlaboratory</groupId>
+			<artifactId>transaction-component</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 
 		<!--		DOCUMENTATION-->
 		<dependency>

@@ -1,5 +1,6 @@
 package com.softlaboratory.transaction.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.softlaboratory.transaction.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ public class TransactionController {
     private TransactionService transactionService;
 
     @PostMapping(value = "/new-transaction")
-    public ResponseEntity<Object> newTransaction(@RequestBody TransactionRequest request) {
+    public ResponseEntity<Object> newTransaction(@RequestBody TransactionRequest request) throws JsonProcessingException {
         try {
             return transactionService.newTransaction(request);
         }catch (Exception e) {

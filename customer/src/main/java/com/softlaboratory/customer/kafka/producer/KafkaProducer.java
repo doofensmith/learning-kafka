@@ -8,6 +8,7 @@ import notification.domain.dto.NotificationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import transaction.constant.TransactionTopic;
 
 @Service
 public class KafkaProducer {
@@ -28,6 +29,10 @@ public class KafkaProducer {
         String message = objectMapper.writeValueAsString(notificationDto);
         kafkaTemplate.send(NotificationTopics.NOTIF_REGISTER_ACCOUNT, message);
 
+    }
+
+    public void sendMessageToCheckProductService(String message) {
+        kafkaTemplate.send(TransactionTopic.NEW_TRANSACTION_CHECK_PRODUCT, message);
     }
 
 }

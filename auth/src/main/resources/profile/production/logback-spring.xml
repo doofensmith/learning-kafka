@@ -37,19 +37,19 @@
 
     <!-- LOG everything at INFO level -->
     <root level="info">
-<!--        <appender-ref ref="RollingFile" />-->
+        <appender-ref ref="RollingFile" />
         <appender-ref ref="Console" />
     </root>
 
     <!-- LOG "com.learning.*" at TRACE level -->
     <logger name="com.softlaboratory.auth" level="trace" additivity="false">
-<!--        <appender-ref ref="RollingFile" />-->
+        <appender-ref ref="RollingFile" />
         <appender-ref ref="Console" />
     </logger>
 
     <!--    LOG FLYWAY DB-->
     <logger name="org.flywaydb" level="debug" additivity="false">
-<!--        <appender-ref ref="RollingFile" />-->
+        <appender-ref ref="RollingFile" />
         <appender-ref ref="Console" />
     </logger>
 </configuration>

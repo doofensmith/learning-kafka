@@ -21,6 +21,5 @@ public class TransactionRequest implements Serializable {
     private Long idProduct;
     private Long idAccount;
     private Integer quantity;
-    private Double total;
 
 }
