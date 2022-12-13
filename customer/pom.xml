@@ -65,10 +65,6 @@
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<!--		<dependency>-->
-		<!--			<groupId>org.springframework.boot</groupId>-->
-		<!--			<artifactId>spring-boot-starter-data-mongodb</artifactId>-->
-		<!--		</dependency>-->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -138,6 +134,11 @@
 		<dependency>
 			<groupId>com.softlaboratory</groupId>
 			<artifactId>notification-component</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.softlaboratory</groupId>
+			<artifactId>transaction-component</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 

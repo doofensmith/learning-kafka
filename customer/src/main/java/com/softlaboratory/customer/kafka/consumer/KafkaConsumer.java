@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
+import transaction.constant.TransactionTopic;
+import transaction.domain.request.TransactionRequest;
 
 import java.util.Map;
 
@@ -54,6 +56,19 @@ public class KafkaConsumer {
             kafkaProducer.sendMessageToNotification("Successful register your new account.", username);
         }
 
+    }
+
+    @KafkaListener(topics = TransactionTopic.NEW_TRANSACTION_CHECK_ACCOUNT)
+    void consumeTransactionCheckAccount(String message) throws JsonProcessingException {
+        log.debug("Received message : {}", message);
+
+        log.debug("Convert message to object.");
+        TransactionRequest transactionRequest = objectMapper.readValue(message, TransactionRequest.class);
+
+        log.debug("Execute service.");
+        ResponseEntity<Object> response = customerService.getCustomerByIdAccount(transactionRequest.getIdAccount());
+
+        
     }
 
 }

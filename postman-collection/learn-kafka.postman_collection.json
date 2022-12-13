@@ -34,7 +34,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\":\"dimas\",\r\n    \"password\":\"dimas123\"\r\n}",
+							"raw": "{\r\n    \"username\":\"admin1\",\r\n    \"password\":\"admin1\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -74,7 +74,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"fullname\":\"Simon\",\r\n    \"username\":\"simon\",\r\n    \"password\":\"simon123\"\r\n}",
+							"raw": "{\r\n    \"fullname\":\"Hardian Hardisk\",\r\n    \"username\":\"hardi\",\r\n    \"password\":\"hardi123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -245,12 +245,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}{{product_port}}{{product_context}}/200000",
+							"raw": "{{base_url}}{{product_port}}{{product_context}}/200",
 							"host": [
 								"{{base_url}}{{product_port}}{{product_context}}"
 							],
 							"path": [
-								"200000"
+								"200"
 							]
 						}
 					},
@@ -262,12 +262,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}{{product_port}}{{product_context}}/2000",
+							"raw": "{{base_url}}{{product_port}}{{product_context}}/200",
 							"host": [
 								"{{base_url}}{{product_port}}{{product_context}}"
 							],
 							"path": [
-								"2000"
+								"200"
 							]
 						}
 					},
@@ -330,6 +330,123 @@
 							],
 							"path": [
 								"push"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "customer",
+			"item": [
+				{
+					"name": "update-profile",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullname\":\"Ahmad AC\",\r\n    \"profile_pic\":\"-\",\r\n    \"email\":\"\",\r\n    \"phone_number\":\"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}{{customer_port}}{{customer_context}}/update-profile/7",
+							"host": [
+								"{{base_url}}{{customer_port}}{{customer_context}}"
+							],
+							"path": [
+								"update-profile",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-customer",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"balance\":999,\r\n    \"point\":999\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}{{customer_port}}{{customer_context}}/update-customer/7",
+							"host": [
+								"{{base_url}}{{customer_port}}{{customer_context}}"
+							],
+							"path": [
+								"update-customer",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "transaction",
+			"item": [
+				{
+					"name": "new-transaction",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quantity\":50,\r\n    \"total\":10,\r\n    \"id_account\":1,\r\n    \"id_product\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}{{transaction_port}}{{transaction_context}}/new-transaction",
+							"host": [
+								"{{base_url}}{{transaction_port}}{{transaction_context}}"
+							],
+							"path": [
+								"new-transaction"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-status",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\":\"SUCCESS\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}{{transaction_port}}{{transaction_context}}/update-status/1",
+							"host": [
+								"{{base_url}}{{transaction_port}}{{transaction_context}}"
+							],
+							"path": [
+								"update-status",
+								"1"
 							]
 						}
 					},
@@ -407,6 +524,26 @@
 		{
 			"key": "notification_context",
 			"value": "/api/notification",
+			"type": "default"
+		},
+		{
+			"key": "customer_port",
+			"value": ":5004",
+			"type": "default"
+		},
+		{
+			"key": "customer_context",
+			"value": "/api/customer",
+			"type": "default"
+		},
+		{
+			"key": "transaction_port",
+			"value": ":5005",
+			"type": "default"
+		},
+		{
+			"key": "transaction_context",
+			"value": "/api/transaction",
 			"type": "default"
 		}
 	]
