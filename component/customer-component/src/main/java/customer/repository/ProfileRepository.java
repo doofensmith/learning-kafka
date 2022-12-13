@@ -1,6 +1,6 @@
-package auth.repository;
+package customer.repository;
 
-import auth.domain.dao.ProfileDao;
+import customer.domain.dao.ProfileDao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

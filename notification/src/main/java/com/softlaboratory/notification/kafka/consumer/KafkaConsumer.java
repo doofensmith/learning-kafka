@@ -21,6 +21,19 @@ public class KafkaConsumer {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @KafkaListener(topics = NotificationTopics.NOTIF_REGISTER_ACCOUNT)
+    void consumeNotifRegisterAccount(String message) throws JsonProcessingException {
+        log.debug("Received message : {}", message);
+
+        log.debug("Convert to request body.");
+        NotificationDto dto = objectMapper.readValue(message, NotificationDto.class);
+
+        log.debug("Execute service.");
+        ResponseEntity<Object> response = service.pushNotification(dto);
+        log.debug("Response : {}", response.getBody());
+
+    }
+
     @KafkaListener(topics = NotificationTopics.NOTIF_ADD_PRODUCT)
     void consumeNotifAddProduct(String request) throws JsonProcessingException {
         log.debug("Received notification request : {}", request);

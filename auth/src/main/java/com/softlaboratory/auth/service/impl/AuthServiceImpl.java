@@ -1,20 +1,17 @@
 package com.softlaboratory.auth.service.impl;
 
-import antlr.TokenStreamIOException;
 import auth.domain.constant.RoleEnum;
 import auth.domain.dao.AccountDao;
-import auth.domain.dao.ProfileDao;
 import auth.domain.dao.RoleDao;
 import auth.domain.request.LoginRequest;
 import auth.domain.request.RegisterRequest;
 import auth.domain.response.LoginResponse;
 import auth.repository.AccountRepository;
-import auth.repository.ProfileRepository;
 import auth.repository.RoleRepository;
-import basecomponent.common.ApiResponse;
 import basecomponent.utility.ResponseUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.softlaboratory.auth.kafka.producer.KafkaProducer;
 import com.softlaboratory.auth.service.AuthService;
-import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,8 +24,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 import security.util.JwtTokenProvider;
 
 import java.util.Optional;
@@ -41,9 +36,6 @@ public class AuthServiceImpl implements AuthService {
     private AccountRepository accountRepository;
 
     @Autowired
-    private ProfileRepository profileRepository;
-
-    @Autowired
     private RoleRepository roleRepository;
 
     @Autowired
@@ -54,6 +46,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private KafkaProducer kafkaProducer;
 
     @Override
     public ResponseEntity<Object> login(LoginRequest request) {
@@ -82,26 +77,33 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public ResponseEntity<Object> register(RegisterRequest request) {
+    public ResponseEntity<Object> register(RegisterRequest request) throws JsonProcessingException {
+        log.info("Starting register request.");
+        log.debug("Request body : {}", request);
+
+        log.debug("Find default role.");
         RoleDao role = roleRepository.findByRoleEqualsIgnoreCase(RoleEnum.USER.name());
 
-        ProfileDao profileDao = new ProfileDao();
-        profileDao.setFullname(request.getFullname());
-
-        profileDao = profileRepository.save(profileDao);
-
         try {
+            log.debug("Preparing new account data.");
             AccountDao account = new AccountDao();
-            account.setProfile(profileDao);
             account.setUsername(request.getUsername());
             account.setPassword(passwordEncoder.encode(request.getPassword()));
 
+            log.debug("Save new account to repository.");
             account = accountRepository.save(account);
+
+            log.debug("New account id : {}", account.getId());
+
+            log.debug("Send message to broker.");
+            kafkaProducer.publishRegisterResponse(account.getId(), request);
+
         }catch (Exception e) {
-            profileRepository.delete(profileDao);
+            log.info("Register failed.");
             throw e;
         }
 
+        log.info("Register success.");
         return ResponseUtil.build(HttpStatus.OK, HttpStatus.OK.getReasonPhrase(), null);
     }
 
@@ -127,20 +129,4 @@ public class AuthServiceImpl implements AuthService {
         }
     }
 
-    @Override
-    public ResponseEntity<Object> test() {
-        WebClient webClient = WebClient.create("http://localhost:5001");
-        LoginRequest request = LoginRequest.builder()
-                .username("admin1")
-                .password("admin1")
-                .build();
-
-        ApiResponse response = webClient.post()
-                .uri("/api/auth/login")
-                .body(Mono.just(request), LoginRequest.class)
-                .retrieve()
-                .bodyToFlux(ApiResponse.class).blockFirst();
-
-        return new ResponseEntity<>(response, HttpStatus.BANDWIDTH_LIMIT_EXCEEDED);
-    }
 }

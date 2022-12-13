@@ -1,11 +1,13 @@
 package com.softlaboratory.product.kafka.producer;
 
-import basecomponent.common.ApiResponse;
 import basecomponent.utility.ResponseUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softlaboratory.product.service.ProductService;
 import lombok.extern.log4j.Log4j2;
+import notification.constant.NotificationConstant;
+import notification.constant.NotificationTopics;
+import notification.domain.dto.NotificationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,32 +32,6 @@ public class KafkaProducer {
 
     @Autowired
     private ObjectMapper mapper;
-
-//    public ResponseEntity<Object> sendResponseOfGetAll() {
-//        try {
-//            ResponseEntity<Object> responseEntity = service.getAll();
-//            ApiResponse response = (ApiResponse) responseEntity.getBody();
-//            String message = mapper.writeValueAsString(response);
-//            template.send(ProductTopics.GET_ALL.topic, message);
-//
-//            return ResponseUtil.build(HttpStatus.OK, HttpStatus.OK.getReasonPhrase(), "Response published.");
-//        } catch (JsonProcessingException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//
-//    public ResponseEntity<Object> sendResponseOfGetById(Long id) {
-//        try {
-//            ResponseEntity<Object> responseEntity = service.getById(id);
-//            ApiResponse response = (ApiResponse) responseEntity.getBody();
-//            String message = mapper.writeValueAsString(response);
-//            template.send(ProductTopics.GET_BY_ID.topic, message);
-//
-//            return ResponseUtil.build(HttpStatus.OK, HttpStatus.OK.getReasonPhrase(), "Response published.");
-//        } catch (JsonProcessingException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
 
     public ResponseEntity<Object> sendCreateDataRequest(ProductDto request) {
         try {
@@ -110,6 +86,17 @@ public class KafkaProducer {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void sendNotificationRequest(String content, String receiver) throws JsonProcessingException {
+        NotificationDto notifReq = NotificationDto.builder()
+                .content(content)
+                .publisher(NotificationConstant.defaultPublisher)
+                .receiver(receiver)
+                .build();
+
+        String message = mapper.writeValueAsString(notifReq);
+        template.send(NotificationTopics.NOTIF_ADD_PRODUCT, message);
     }
 
 }

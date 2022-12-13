@@ -1,4 +1,4 @@
-package auth.domain.dao;
+package customer.domain.dao;
 
 import basecomponent.common.BaseDaoSoftDelete;
 import lombok.AllArgsConstructor;
@@ -30,10 +30,16 @@ public class ProfileDao extends BaseDaoSoftDelete implements Serializable {
     @Column(nullable = false, length = 100)
     private String fullname;
 
+    @Column(name = "profile_pic", columnDefinition = "varchar(255) default '-'")
+    private String profilePic = "-";
+
     @Column(length = 50)
     private String email;
 
     @Column(length = 20)
     private String phoneNumber;
+
+    @Column(nullable = false)
+    private Long idAccount;
 
 }
