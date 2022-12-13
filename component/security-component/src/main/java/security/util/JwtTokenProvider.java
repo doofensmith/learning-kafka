@@ -2,14 +2,12 @@ package security.util;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.crypto.spec.SecretKeySpec;
