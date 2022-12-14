@@ -1,7 +1,6 @@
 package com.softlaboratory.customer.kafka.consumer;
 
 import auth.constant.AuthTopics;
-import basecomponent.common.ApiResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softlaboratory.customer.kafka.producer.KafkaProducer;
@@ -15,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import transaction.constant.TransactionTopic;
-import transaction.domain.request.TransactionRequest;
 
 import java.util.Map;
 
@@ -73,11 +71,11 @@ public class KafkaConsumer {
         ResponseEntity<Object> response = customerService.getCustomerByIdAccount(idAccount);
 
         if (response.getStatusCode() == HttpStatus.OK) {
+            log.debug("Send message to product service.");
             kafkaProducer.sendMessageToCheckProductService(message);
         }else {
-            ApiResponse apiResponse = objectMapper.convertValue(response.getBody(), ApiResponse.class);
-            CustomerDto customerDto = objectMapper.convertValue(apiResponse.getData(), CustomerDto.class);
-            log.debug("Customer DTO : {}", customerDto);
+            //TODO: update transaction status to failed and send message to notification service
+
         }
         
     }

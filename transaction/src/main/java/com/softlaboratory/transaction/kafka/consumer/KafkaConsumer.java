@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softlaboratory.transaction.service.TransactionService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,13 @@ public class KafkaConsumer {
 
         log.debug("Execute service.");
         ResponseEntity<Object> response = transactionService.updateTransactionTotal(idTransaction, productDto);
+
+        if (response.getStatusCode() == HttpStatus.OK) {
+            //TODO: send message to notification service
+            //TODO: send message to product service (total quantity)
+        }else {
+            //TODO: update transaction status to failed and send message to notification service
+        }
 
     }
 

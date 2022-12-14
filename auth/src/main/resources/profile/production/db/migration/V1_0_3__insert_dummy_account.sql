@@ -3,9 +3,9 @@ INTO
   t_account_master
   (created_at, created_by, username, password, is_deleted, is_active)
 VALUES
-  (NOW(), 'FLYWAY', 'admin1', '$2a$12$Edso/GHPTxuASVz13Fia/upCEOkkGFb3wnNsqE0RaRechZ.Pnq/SG', 0, 1),
-  (NOW(), 'FLYWAY', 'admin2', '$2a$12$Edso/GHPTxuASVz13Fia/upCEOkkGFb3wnNsqE0RaRechZ.Pnq/SG', 0, 1),
-  (NOW(), 'FLYWAY', 'dimas', '$2a$12$Edso/GHPTxuASVz13Fia/upCEOkkGFb3wnNsqE0RaRechZ.Pnq/SG', 0, 1);
+  (NOW(), 'FLYWAY', 'admin1', '$2a$12$VZr/HXiouQvoR3Pjx50bpO2BK9Dt3Uc9JTg33/6fm1VM4QCLOtRMu', 0, 1),
+  (NOW(), 'FLYWAY', 'admin2', '$2a$12$VZr/HXiouQvoR3Pjx50bpO2BK9Dt3Uc9JTg33/6fm1VM4QCLOtRMu', 0, 1),
+  (NOW(), 'FLYWAY', 'dimas', '$2a$12$VZr/HXiouQvoR3Pjx50bpO2BK9Dt3Uc9JTg33/6fm1VM4QCLOtRMu', 0, 1);
 
 INSERT
 INTO

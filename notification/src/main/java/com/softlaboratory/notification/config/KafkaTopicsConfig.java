@@ -10,6 +10,13 @@ import org.springframework.kafka.config.TopicBuilder;
 public class KafkaTopicsConfig {
 
     @Bean
+    public NewTopic notifRegisterAccount() {
+        return TopicBuilder
+                .name(NotificationTopics.NOTIF_REGISTER_ACCOUNT)
+                .build();
+    }
+
+    @Bean
     public NewTopic notifAddProduct() {
         return TopicBuilder
                 .name(NotificationTopics.NOTIF_ADD_PRODUCT)
@@ -29,5 +36,13 @@ public class KafkaTopicsConfig {
                 .name(NotificationTopics.NOTIF_DELETE_PRODUCT)
                 .build();
     }
+
+    @Bean
+    public NewTopic notifNewTransaction() {
+        return TopicBuilder
+                .name(NotificationTopics.NOTIF_NEW_TRANSACTION)
+                .build();
+    }
+
 
 }

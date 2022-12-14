@@ -10,6 +10,8 @@ import transaction.domain.request.UpdateTransactionRequest;
 @Service
 public interface TransactionService {
 
+    //TODO: create service get all transaction pagination
+    //TODO: create service get transaction by id
     ResponseEntity<Object> newTransaction(TransactionRequest request) throws JsonProcessingException;
     ResponseEntity<Object> updateTransactionStatus(Long idTransaction, UpdateTransactionRequest request);
     ResponseEntity<Object> updateTransactionTotal(Long idTransaction, ProductDto productDto);

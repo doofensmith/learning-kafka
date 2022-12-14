@@ -138,14 +138,21 @@ public class KafkaConsumer {
             ApiResponse apiResponse = objectMapper.convertValue(response.getBody(), ApiResponse.class);
             ProductDto productDto = objectMapper.convertValue(apiResponse.getData(), ProductDto.class);
 
+            //TODO: cek product stock before send message
+
+
             log.debug("Get transaction id.");
             Long idTransaction = objectMapper.convertValue(dataObject.get("id_transaction"), Long.class);
 
             log.debug("Send message to transaction.");
             kafkaProducer.sendProductByIdToTransaction(idTransaction, productDto);
 
+        }else {
+            //TODO: change transaction status to failed and send to notification service
         }
 
     }
+
+    //TODO: create consumer to consume message from transaction to update stock
 
 }

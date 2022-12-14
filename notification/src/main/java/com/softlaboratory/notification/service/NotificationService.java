@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 public interface NotificationService {
 
     ResponseEntity<Object> getNotification(String receiverReq, Integer page, Integer size);
+    //TODO: create service get notification by id
     ResponseEntity<Object> pushNotification(NotificationDto request);
 
 }

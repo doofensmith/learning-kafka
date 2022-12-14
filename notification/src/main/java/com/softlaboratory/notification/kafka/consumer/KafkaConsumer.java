@@ -70,4 +70,16 @@ public class KafkaConsumer {
         log.debug("Response : {}", response.getBody());
     }
 
+    @KafkaListener(topics = NotificationTopics.NOTIF_NEW_TRANSACTION)
+    void consumeNotifNewTransaction(String request) throws JsonProcessingException {
+        log.debug("Received notification request : {}", request);
+
+        log.debug("Convert request body.");
+        NotificationDto dto = objectMapper.readValue(request, NotificationDto.class);
+
+        log.debug("Execute service.");
+        ResponseEntity<Object> response = service.pushNotification(dto);
+        log.debug("Response : {}", response.getBody());
+    }
+
 }
