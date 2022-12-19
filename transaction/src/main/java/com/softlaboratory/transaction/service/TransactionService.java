@@ -14,6 +14,7 @@ public interface TransactionService {
     //TODO: create service get transaction by id
     ResponseEntity<Object> newTransaction(TransactionRequest request) throws JsonProcessingException;
     ResponseEntity<Object> updateTransactionStatus(Long idTransaction, UpdateTransactionRequest request);
-    ResponseEntity<Object> updateTransactionTotal(Long idTransaction, ProductDto productDto);
+    ResponseEntity<Object> updateTransactionTotal(Long idTransaction, Double price);
+    //TODO: create service cancel transaction
 
 }

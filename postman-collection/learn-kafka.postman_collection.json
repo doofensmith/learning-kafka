@@ -34,7 +34,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\":\"admin1\",\r\n    \"password\":\"admin1\"\r\n}",
+							"raw": "{\r\n    \"username\":\"admin1\",\r\n    \"password\":\"test\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -74,7 +74,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"fullname\":\"Hardian Hardisk\",\r\n    \"username\":\"hardi\",\r\n    \"password\":\"hardi123\"\r\n}",
+							"raw": "{\r\n    \"fullname\":\"Hardian Hardisk\",\r\n    \"username\":\"hardo\",\r\n    \"password\":\"hardi123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -284,15 +284,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}{{notification_port}}{{notification_context}}",
+							"raw": "{{base_url}}{{notification_port}}{{notification_context}}?receiver=admin1",
 							"host": [
 								"{{base_url}}{{notification_port}}{{notification_context}}"
 							],
 							"query": [
 								{
 									"key": "receiver",
-									"value": "dimas",
-									"disabled": true
+									"value": "admin1"
 								},
 								{
 									"key": "page",
@@ -406,7 +405,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"quantity\":50,\r\n    \"total\":10,\r\n    \"id_account\":1,\r\n    \"id_product\":2\r\n}",
+							"raw": "{\r\n    \"quantity\":16,\r\n    \"id_account\":3,\r\n    \"id_product\":1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

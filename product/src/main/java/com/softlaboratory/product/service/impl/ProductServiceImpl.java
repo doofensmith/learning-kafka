@@ -126,9 +126,6 @@ public class ProductServiceImpl implements ProductService {
             log.debug("Update data with repository.");
             repository.save(daoNew);
 
-//            log.debug("Convert result to data transfer.");
-//            ProductDto dto = modelMapper.map(daoNew, ProductDto.class);
-
             log.info("Update data by id success.");
             return ResponseUtil.build(HttpStatus.OK, HttpStatus.OK.getReasonPhrase(), null);
         }else {
@@ -157,6 +154,17 @@ public class ProductServiceImpl implements ProductService {
             log.info("Delete data by id failed.");
             return ResponseUtil.build(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.getReasonPhrase(), null);
         }
+    }
+
+    @Override
+    public ResponseEntity<Object> updateStock(Long id, int newStock) {
+        log.debug("Starting update product stock.");
+
+        log.debug("Save new data with repository.");
+        repository.updateStockByIdEquals(newStock, id);
+
+        log.debug("Update product stock success.");
+        return ResponseUtil.build(HttpStatus.OK, HttpStatus.OK.getReasonPhrase(), null);
     }
 
 }

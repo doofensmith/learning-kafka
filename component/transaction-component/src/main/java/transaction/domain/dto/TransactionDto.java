@@ -22,9 +22,11 @@ public class TransactionDto implements Serializable {
     private Long id;
     private LocalDateTime issuedAt;
     private LocalDateTime settleAt;
+    private String productName;
     private Integer quantity;
     private Double total;
     private String status;
+    private String customer;
     private Long idProduct;
     private Long idAccount;
 

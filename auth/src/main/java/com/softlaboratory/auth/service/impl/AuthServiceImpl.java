@@ -26,6 +26,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import security.util.JwtTokenProvider;
 
+import java.util.List;
 import java.util.Optional;
 
 @Log4j2
@@ -89,6 +90,7 @@ public class AuthServiceImpl implements AuthService {
             AccountDao account = new AccountDao();
             account.setUsername(request.getUsername());
             account.setPassword(passwordEncoder.encode(request.getPassword()));
+            account.setRoles(List.of(role));
 
             log.debug("Save new account to repository.");
             account = accountRepository.save(account);

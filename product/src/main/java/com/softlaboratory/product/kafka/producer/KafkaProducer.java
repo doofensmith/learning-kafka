@@ -5,9 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softlaboratory.product.service.ProductService;
 import lombok.extern.log4j.Log4j2;
-import notification.constant.NotificationConstant;
-import notification.constant.NotificationTopics;
-import notification.domain.dto.NotificationDto;
+import notification.kafka.producer.NotificationProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,15 +13,16 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import product.domain.dto.ProductDto;
-import product.kafka.topics.ProductTopics;
+import product.kafka.topic.ProductTopic;
 import transaction.constant.TransactionTopic;
+import transaction.domain.request.UpdateTransactionRequest;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Log4j2
 @Service
-public class KafkaProducer {
+public class KafkaProducer extends NotificationProducer {
 
     @Autowired
     private KafkaTemplate<String, String> template;
@@ -33,6 +32,10 @@ public class KafkaProducer {
 
     @Autowired
     private ObjectMapper mapper;
+
+    public KafkaProducer(ObjectMapper objectMapper, KafkaTemplate<String, String> kafkaTemplate) {
+        super(objectMapper, kafkaTemplate);
+    }
 
     public ResponseEntity<Object> sendCreateDataRequest(ProductDto request) {
         try {
@@ -44,7 +47,7 @@ public class KafkaProducer {
             data.put("request", request);
 
             String message = mapper.writeValueAsString(data);
-            template.send(ProductTopics.ADD_NEW, message);
+            template.send(ProductTopic.ADD_NEW, message);
 
             return ResponseUtil.build(HttpStatus.OK, "Add product request sent.", null);
         } catch (JsonProcessingException e) {
@@ -63,7 +66,7 @@ public class KafkaProducer {
             req.put("request", request);
 
             String message = mapper.writeValueAsString(req);
-            template.send(ProductTopics.UPDATE, message);
+            template.send(ProductTopic.UPDATE, message);
 
             return ResponseUtil.build(HttpStatus.OK, "Update product request sent.", null);
         } catch (JsonProcessingException e) {
@@ -81,7 +84,7 @@ public class KafkaProducer {
             data.put("id", id);
 
             String message = mapper.writeValueAsString(data);
-            template.send(ProductTopics.DELETE, message);
+            template.send(ProductTopic.DELETE, message);
 
             return ResponseUtil.build(HttpStatus.OK, "Delete product request sent.", null);
         } catch (JsonProcessingException e) {
@@ -89,25 +92,18 @@ public class KafkaProducer {
         }
     }
 
-    public void sendNotificationRequest(String content, String receiver) throws JsonProcessingException {
-        NotificationDto notifReq = NotificationDto.builder()
-                .content(content)
-                .publisher(NotificationConstant.defaultPublisher)
-                .receiver(receiver)
-                .build();
-
-        String message = mapper.writeValueAsString(notifReq);
-        template.send(NotificationTopics.NOTIF_ADD_PRODUCT, message);
-    }
-
-    public void sendProductByIdToTransaction(Long idTransaction, ProductDto productDto) throws JsonProcessingException {
-        Map<String, Object> data = new HashMap<>();
-        data.put("id_transaction", idTransaction);
-        data.put("product", productDto);
-
+    public void sendProductCheckResultToTransaction(Map<String, Object> data) throws JsonProcessingException {
         String message = mapper.writeValueAsString(data);
         template.send(TransactionTopic.NEW_TRANSACTION_REQUEST, message);
+    }
 
+    public void sendTransactionStatusToTransactionService(Long idTransaction, UpdateTransactionRequest request) throws JsonProcessingException {
+        Map<String, Object> data = new HashMap<>();
+        data.put("id_transaction", idTransaction);
+        data.put("request", request);
+
+        String message = mapper.writeValueAsString(data);
+        template.send(TransactionTopic.UPDATE_STATUS, message);
     }
 
 }

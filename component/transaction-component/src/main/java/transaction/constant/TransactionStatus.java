@@ -1,5 +1,5 @@
 package transaction.constant;
 
 public enum TransactionStatus {
-    PROCESSING, HOLD, CANCELLED, FAILED, SUCCESS
+    PROCESSING, PLACED, HOLD, CANCELLED, FAILED, SUCCESS
 }

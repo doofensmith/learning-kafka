@@ -21,7 +21,7 @@ public class KafkaConsumer {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @KafkaListener(topics = NotificationTopics.NOTIF_REGISTER_ACCOUNT)
+    @KafkaListener(topics = NotificationTopics.NOTIF_PUSH_NEW)
     void consumeNotifRegisterAccount(String message) throws JsonProcessingException {
         log.debug("Received message : {}", message);
 
@@ -32,54 +32,6 @@ public class KafkaConsumer {
         ResponseEntity<Object> response = service.pushNotification(dto);
         log.debug("Response : {}", response.getBody());
 
-    }
-
-    @KafkaListener(topics = NotificationTopics.NOTIF_ADD_PRODUCT)
-    void consumeNotifAddProduct(String request) throws JsonProcessingException {
-        log.debug("Received notification request : {}", request);
-
-        log.debug("Convert request body.");
-        NotificationDto dto = objectMapper.readValue(request, NotificationDto.class);
-
-        log.debug("Execute service.");
-        ResponseEntity<Object> response = service.pushNotification(dto);
-        log.debug("Response : {}", response.getBody());
-    }
-
-    @KafkaListener(topics = NotificationTopics.NOTIF_UPDATE_PRODUCT)
-    void consumeNotifUpdateProduct(String request) throws JsonProcessingException {
-        log.debug("Received notification request : {}", request);
-
-        log.debug("Convert request body.");
-        NotificationDto dto = objectMapper.readValue(request, NotificationDto.class);
-
-        log.debug("Execute service.");
-        ResponseEntity<Object> response = service.pushNotification(dto);
-        log.debug("Response : {}", response.getBody());
-    }
-
-    @KafkaListener(topics = NotificationTopics.NOTIF_DELETE_PRODUCT)
-    void consumeNotifDeleteProduct(String request) throws JsonProcessingException {
-        log.debug("Received notification request : {}", request);
-
-        log.debug("Convert request body.");
-        NotificationDto dto = objectMapper.readValue(request, NotificationDto.class);
-
-        log.debug("Execute service.");
-        ResponseEntity<Object> response = service.pushNotification(dto);
-        log.debug("Response : {}", response.getBody());
-    }
-
-    @KafkaListener(topics = NotificationTopics.NOTIF_NEW_TRANSACTION)
-    void consumeNotifNewTransaction(String request) throws JsonProcessingException {
-        log.debug("Received notification request : {}", request);
-
-        log.debug("Convert request body.");
-        NotificationDto dto = objectMapper.readValue(request, NotificationDto.class);
-
-        log.debug("Execute service.");
-        ResponseEntity<Object> response = service.pushNotification(dto);
-        log.debug("Response : {}", response.getBody());
     }
 
 }

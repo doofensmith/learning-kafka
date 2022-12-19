@@ -50,7 +50,7 @@ public class TransactionServiceImpl implements TransactionService {
 
             log.debug("Add new transaction success.");
 
-            log.debug("Send message to broker.");
+            log.debug("Send message to broker check account.");
             kafkaProducer.sendTransactionRequest(transactionDao.getId(), request);
 
         }catch (Exception e) {
@@ -74,21 +74,21 @@ public class TransactionServiceImpl implements TransactionService {
             log.debug("Update transaction status success.");
             return ResponseUtil.build(HttpStatus.OK, "Transaction status updated.", null);
         }else {
+            log.debug("Update transaction status failed.");
             return ResponseUtil.build(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.getReasonPhrase(), null);
         }
 
     }
 
     @Override
-    public ResponseEntity<Object> updateTransactionTotal(Long idTransaction, ProductDto productDto) {
+    public ResponseEntity<Object> updateTransactionTotal(Long idTransaction, Double price) {
         log.debug("Starting update total price.");
-        log.debug("Transaction id : {}, Product : {}", idTransaction, productDto);
 
         log.debug("Get transaction with repository.");
         Optional<TransactionDao> transactionDao = transactionRepository.findById(idTransaction);
         if (transactionDao.isPresent()) {
             log.debug("Count total price.");
-            Double totalPrice = transactionDao.get().getQuantity() * productDto.getPrice();
+            Double totalPrice = transactionDao.get().getQuantity() * price;
 
             log.debug("Update transaction total price with repository.");
             transactionRepository.updateTotalByIdEquals(totalPrice, idTransaction);

@@ -30,4 +30,11 @@ public class KafkaTopicsConfig {
                 .build();
     }
 
+    @Bean
+    public NewTopic transactionUpdateStatus() {
+        return TopicBuilder
+                .name(TransactionTopic.UPDATE_STATUS)
+                .build();
+    }
+
 }

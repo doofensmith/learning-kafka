@@ -4,10 +4,10 @@ import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.TopicBuilder;
-import product.kafka.topics.ProductTopics;
+import product.kafka.topic.ProductTopic;
 
 @Configuration
-public class KafkaTopicsConfig {
+public class KafkaTopicConfig {
 
 //    @Bean
 //    public NewTopic getAllProductTopic() {
@@ -30,7 +30,7 @@ public class KafkaTopicsConfig {
     @Bean
     public NewTopic addNewProductTopic() {
         return TopicBuilder
-                .name(ProductTopics.ADD_NEW)
+                .name(ProductTopic.ADD_NEW)
 //                .replicas(3)
 //                .partitions(3)
                 .build();
@@ -39,7 +39,7 @@ public class KafkaTopicsConfig {
     @Bean
     public NewTopic updateProductTopic() {
         return TopicBuilder
-                .name(ProductTopics.UPDATE)
+                .name(ProductTopic.UPDATE)
 //                .replicas(3)
 //                .partitions(3)
                 .build();
@@ -48,9 +48,16 @@ public class KafkaTopicsConfig {
     @Bean
     public NewTopic deleteProductTopic() {
         return TopicBuilder
-                .name(ProductTopics.DELETE)
+                .name(ProductTopic.DELETE)
 //                .replicas(3)
 //                .partitions(3)
+                .build();
+    }
+
+    @Bean
+    public NewTopic updateProductStockTopic() {
+        return TopicBuilder
+                .name(ProductTopic.UPDATE_STOCK)
                 .build();
     }
 

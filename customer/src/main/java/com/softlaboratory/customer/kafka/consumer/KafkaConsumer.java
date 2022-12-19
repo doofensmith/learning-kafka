@@ -8,12 +8,19 @@ import com.softlaboratory.customer.service.CustomerService;
 import customer.domain.dto.CustomerDto;
 import customer.domain.dto.ProfileDto;
 import lombok.extern.log4j.Log4j2;
+import notification.constant.NotificationConstant;
+import notification.constant.NotificationTopics;
+import notification.domain.request.NotificationRequest;
+import notification.kafka.producer.NotificationProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
+import transaction.constant.TransactionStatus;
 import transaction.constant.TransactionTopic;
+import transaction.domain.request.TransactionRequest;
+import transaction.domain.request.UpdateTransactionRequest;
 
 import java.util.Map;
 
@@ -52,7 +59,7 @@ public class KafkaConsumer {
 
         log.debug("Send notification.");
         if (response.getStatusCode() == HttpStatus.OK) {
-            kafkaProducer.sendMessageToNotification("Successful register your new account.", username);
+            kafkaProducer.sendNotification(NotificationTopics.NOTIF_PUSH_NEW,"Successful register your new account.", username);
         }
 
     }
@@ -64,8 +71,11 @@ public class KafkaConsumer {
         log.debug("Convert message to object.");
         Map<String, Object> messageObject = objectMapper.readValue(message, Map.class);
 
+        log.debug("Get transaction request.");
+        TransactionRequest request = objectMapper.convertValue(messageObject.get("transaction_request"), TransactionRequest.class);
+
         log.debug("Get id account.");
-        Long idAccount = objectMapper.convertValue(messageObject.get("id_account"), Long.class);
+        Long idAccount = objectMapper.convertValue(request.getIdAccount(), Long.class);
 
         log.debug("Execute service.");
         ResponseEntity<Object> response = customerService.getCustomerByIdAccount(idAccount);
@@ -74,7 +84,24 @@ public class KafkaConsumer {
             log.debug("Send message to product service.");
             kafkaProducer.sendMessageToCheckProductService(message);
         }else {
-            //TODO: update transaction status to failed and send message to notification service
+            log.debug("Customer account id {} not found.", idAccount);
+
+            log.debug("Get transaction id.");
+            Long idTransaction = objectMapper.convertValue(messageObject.get("id_transaction"), Long.class);
+
+            log.debug("Transaction status : FAILED");
+            UpdateTransactionRequest updateTransactionRequest = UpdateTransactionRequest.builder()
+                    .status(TransactionStatus.FAILED)
+                    .build();
+
+            log.debug("Send message to transaction service to update status.");
+            kafkaProducer.sendMessageToUpdateTransactionStatus(idTransaction, updateTransactionRequest);
+
+            log.debug("Send message to notification service.");
+            kafkaProducer.sendNotification(
+                    NotificationTopics.NOTIF_PUSH_NEW,
+                    NotificationConstant.TRANSACTION_FAILED_ACCOUNT_NOT_FOUND+" Id account : "+idAccount,
+                    NotificationConstant.ADMIN_RECEIVER);
 
         }
         

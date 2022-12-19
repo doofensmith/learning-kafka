@@ -12,5 +12,6 @@ public interface ProductService {
     ResponseEntity<Object> create(ProductDto request);
     ResponseEntity<Object> updateById(Long id, ProductDto request);
     ResponseEntity<Object> deleteById(Long id);
+    ResponseEntity<Object> updateStock(Long id, int newStock);
 
 }
