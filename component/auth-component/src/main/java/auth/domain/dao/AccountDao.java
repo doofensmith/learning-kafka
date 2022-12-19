@@ -44,10 +44,6 @@ public class AccountDao extends BaseDaoSoftDelete implements UserDetails {
     @Column(name = "login_attemp", length = 1, columnDefinition = "smallint default 0")
     private Integer loginAttemp = 0;
 
-    @OneToOne
-    @JoinColumn(name = "id_profile", nullable = false)
-    private ProfileDao profile;
-
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "bt_account_roles",

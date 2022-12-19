@@ -118,6 +118,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
+<!--		COMPONENT-->
 		<dependency>
 			<groupId>com.softlaboratory</groupId>
 			<artifactId>base-component</artifactId>
@@ -138,18 +139,22 @@
 			<artifactId>auth-component</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>com.softlaboratory</groupId>
+			<artifactId>notification-component</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.softlaboratory</groupId>
+			<artifactId>transaction-component</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 
 		<!--		DOCUMENTATION-->
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>1.6.13</version>
-		</dependency>
-
-		<!--		WEB CLIENT-->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
 	</dependencies>
 

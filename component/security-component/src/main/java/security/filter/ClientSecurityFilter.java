@@ -31,7 +31,6 @@ import java.util.Map;
 public class ClientSecurityFilter extends GenericFilterBean {
 
     private final JwtTokenProvider tokenProvider;
-    private final WebClient client;
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -54,6 +53,7 @@ public class ClientSecurityFilter extends GenericFilterBean {
 
             if (username != null && authentication == null && !tokenProvider.isExpired(token)) {
                 Authentication authenticationToken = tokenProvider.getAuthenticationTokenClient(token);
+                log.info("Filter authentication : {}", authenticationToken);
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
 

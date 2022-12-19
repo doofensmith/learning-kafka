@@ -6,6 +6,10 @@ import com.softlaboratory.product.service.ProductService;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -18,6 +22,7 @@ import product.repository.ProductRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Log4j2
@@ -28,13 +33,18 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository repository;
 
     @Override
-    public ResponseEntity<Object> getAll() {
-        log.info("Starting get all data.");
+    public ResponseEntity<Object> getPage(Integer page, Integer size) {
+        log.info("Starting get all data pagination.");
 
         log.debug("Fetch data with repository.");
-        List<ProductDao> productDaoList = repository.findAll();
+        Pageable pageable = PageRequest.of(
+                Objects.requireNonNullElse(page, 0),
+                Objects.requireNonNullElse(size, 10)
+        );
+        Page<ProductDao> productDaoPage = repository.findAll(pageable);
 
         log.debug("Converting to data transfer.");
+        List<ProductDao> productDaoList = productDaoPage.getContent();
         List<ProductDto> productDtoList = new ArrayList<>();
         for (ProductDao dao : productDaoList) {
             productDtoList.add(ProductDto.builder()
@@ -116,9 +126,6 @@ public class ProductServiceImpl implements ProductService {
             log.debug("Update data with repository.");
             repository.save(daoNew);
 
-//            log.debug("Convert result to data transfer.");
-//            ProductDto dto = modelMapper.map(daoNew, ProductDto.class);
-
             log.info("Update data by id success.");
             return ResponseUtil.build(HttpStatus.OK, HttpStatus.OK.getReasonPhrase(), null);
         }else {
@@ -147,6 +154,17 @@ public class ProductServiceImpl implements ProductService {
             log.info("Delete data by id failed.");
             return ResponseUtil.build(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.getReasonPhrase(), null);
         }
+    }
+
+    @Override
+    public ResponseEntity<Object> updateStock(Long id, int newStock) {
+        log.debug("Starting update product stock.");
+
+        log.debug("Save new data with repository.");
+        repository.updateStockByIdEquals(newStock, id);
+
+        log.debug("Update product stock success.");
+        return ResponseUtil.build(HttpStatus.OK, HttpStatus.OK.getReasonPhrase(), null);
     }
 
 }

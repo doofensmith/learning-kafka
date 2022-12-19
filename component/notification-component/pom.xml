@@ -13,5 +13,20 @@
     <artifactId>notification-component</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
+    <dependencies>
+        <!--        MODULE-->
+        <dependency>
+            <groupId>com.softlaboratory</groupId>
+            <artifactId>base-component</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!--		MESSAGE BROKER-->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
