@@ -101,9 +101,6 @@ public class ProductServiceImpl implements ProductService {
         log.debug("Save data with repository.");
         productDao = repository.save(productDao);
 
-//        log.debug("Convert result to data transfer.");
-//        ProductDto dto = modelMapper.map(productDao, ProductDto.class);
-
         log.info("Save new data success.");
 
         return ResponseUtil.build(HttpStatus.OK, HttpStatus.OK.getReasonPhrase(), null);
