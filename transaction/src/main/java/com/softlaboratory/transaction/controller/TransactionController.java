@@ -15,6 +15,26 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
+    @GetMapping(value = "/query")
+    public ResponseEntity<Object> getPageTransaction(
+            @RequestParam(value = "page", required = false) Integer reqPage,
+            @RequestParam(value = "size", required = false) Integer reqSize) {
+        try {
+            return transactionService.getPageTransaction(reqPage, reqSize);
+        }catch (Exception e) {
+            throw e;
+        }
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Object> getTransactionById(@PathVariable Long id) {
+        try {
+            return transactionService.getTransactionById(id);
+        }catch (Exception e) {
+            throw e;
+        }
+    }
+
     @PostMapping(value = "/new-transaction")
     public ResponseEntity<Object> newTransaction(@RequestBody TransactionRequest request) throws JsonProcessingException {
         try {

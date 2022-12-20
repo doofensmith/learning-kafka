@@ -4,6 +4,7 @@ import com.softlaboratory.notification.service.NotificationService;
 import notification.domain.dto.NotificationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,6 +26,7 @@ public class NotificationController {
         }
     }
 
+    @PreAuthorize("hasAuthority(ADMIN)")
     @PostMapping(value = "/push")
     public ResponseEntity<Object> pushNotification(@RequestBody NotificationDto request) {
         try {

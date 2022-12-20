@@ -6,17 +6,26 @@ import com.softlaboratory.transaction.kafka.producer.KafkaProducer;
 import com.softlaboratory.transaction.service.TransactionService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import product.domain.dto.ProductDto;
 import transaction.constant.TransactionStatus;
 import transaction.domain.dao.TransactionDao;
+import transaction.domain.dto.TransactionDto;
 import transaction.domain.request.TransactionRequest;
 import transaction.domain.request.UpdateTransactionRequest;
 import transaction.repository.TransactionRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Log4j2
@@ -28,6 +37,69 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Autowired
     private KafkaProducer kafkaProducer;
+
+    @Override
+    public ResponseEntity<Object> getPageTransaction(Integer reqPage, Integer reqSize) {
+        log.debug("Starting get transaction pagination.");
+
+        log.debug("Request page : {}, size : {}.", reqPage, reqSize);
+
+        log.debug("Default page and size.");
+        Pageable pageable = PageRequest.of(
+                Objects.requireNonNullElse(reqPage, 0),
+                Objects.requireNonNullElse(reqSize, 25),
+                Sort.by("id").descending()
+        );
+
+        log.debug("Fetch data with repository.");
+        Page<TransactionDao> transactionPage = transactionRepository.findAll(pageable);
+
+        log.debug("Convert result to data presentation.");
+        List<TransactionDto> transactionDto = new ArrayList<>();
+        transactionPage.getContent()
+                .forEach(transactionDao -> transactionDto.add(
+                        TransactionDto.builder()
+                                .id(transactionDao.getId())
+                                .issuedAt(transactionDao.getIssuedAt())
+                                .status(transactionDao.getStatus())
+                                .quantity(transactionDao.getQuantity())
+                                .total(transactionDao.getTotal())
+                                .settleAt(transactionDao.getSettleAt())
+                                .build()
+                ));
+
+        log.debug("Get all transaction data success.");
+        return ResponseUtil.build(HttpStatus.OK, HttpStatus.OK.getReasonPhrase(), transactionDto);
+    }
+
+    @Override
+    public ResponseEntity<Object> getTransactionById(Long id) {
+        log.debug("Starting get transaction by id.");
+
+        log.debug("Request id : {}", id);
+
+        log.debug("Fetching data with repository.");
+        Optional<TransactionDao> transactionDao = transactionRepository.findById(id);
+        if (transactionDao.isPresent()) {
+            log.debug("Transaction id : {} found. Convert to data presentation.", id);
+            TransactionDto transactionDto = TransactionDto.builder()
+                    .id(transactionDao.get().getId())
+                    .status(transactionDao.get().getStatus())
+                    .quantity(transactionDao.get().getQuantity())
+                    .issuedAt(transactionDao.get().getIssuedAt())
+                    .settleAt(transactionDao.get().getSettleAt())
+                    .total(transactionDao.get().getTotal())
+                    .build();
+
+            log.debug("Get transaction by id success.");
+            return ResponseUtil.build(HttpStatus.OK, HttpStatus.OK.getReasonPhrase(), transactionDto);
+        } else {
+            log.debug("Transaction with id : {} not found.", id);
+
+            log.debug("Get transaction by id failed.");
+            return ResponseUtil.build(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.getReasonPhrase(), null);
+        }
+    }
 
     @Override
     public ResponseEntity<Object> newTransaction(TransactionRequest request) throws JsonProcessingException {
