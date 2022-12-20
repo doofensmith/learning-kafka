@@ -1,16 +1,16 @@
 package com.softlaboratory.auth.service.impl;
 
-import auth.domain.constant.RoleEnum;
-import auth.domain.dao.AccountDao;
-import auth.domain.dao.RoleDao;
 import auth.domain.request.LoginRequest;
 import auth.domain.request.RegisterRequest;
 import auth.domain.response.LoginResponse;
-import auth.repository.AccountRepository;
-import auth.repository.RoleRepository;
 import basecomponent.utility.ResponseUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.softlaboratory.auth.domain.dao.AccountDao;
+import com.softlaboratory.auth.domain.dao.RoleDao;
+import com.softlaboratory.auth.domain.enums.RoleEnum;
 import com.softlaboratory.auth.kafka.producer.KafkaProducer;
+import com.softlaboratory.auth.repository.AccountRepository;
+import com.softlaboratory.auth.repository.RoleRepository;
 import com.softlaboratory.auth.service.AuthService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.softlaboratory.auth.service.impl;
 
-import auth.domain.dao.AccountDao;
-import auth.repository.AccountRepository;
+import com.softlaboratory.auth.domain.dao.AccountDao;
+import com.softlaboratory.auth.repository.AccountRepository;
 import com.softlaboratory.auth.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;

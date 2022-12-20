@@ -1,4 +1,4 @@
-package auth.domain.dao;
+package com.softlaboratory.auth.domain.dao;
 
 import basecomponent.common.BaseDaoSoftDelete;
 import lombok.AllArgsConstructor;

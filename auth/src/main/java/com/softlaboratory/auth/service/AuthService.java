@@ -1,6 +1,5 @@
 package com.softlaboratory.auth.service;
 
-import auth.domain.dao.AccountDao;
 import auth.domain.request.LoginRequest;
 import auth.domain.request.RegisterRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;

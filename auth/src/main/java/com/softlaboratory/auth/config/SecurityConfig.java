@@ -1,10 +1,16 @@
-package security.config;
+package com.softlaboratory.auth.config;
 
-import auth.domain.dao.AccountDao;
+import com.softlaboratory.auth.domain.dao.AccountDao;
+import com.softlaboratory.auth.security.SecurityFilter;
+import com.softlaboratory.auth.service.UserService;
+import com.softlaboratory.auth.service.impl.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -14,11 +20,12 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import security.filter.SecurityFilter;
 import security.util.JwtTokenProvider;
-import security.util.UserService;
 
-public abstract class SecurityConfig extends WebSecurityConfiguration {
+@Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class SecurityConfig extends WebSecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -61,7 +68,7 @@ public abstract class SecurityConfig extends WebSecurityConfiguration {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new UserService();
+        return new UserServiceImpl();
     }
 
     @Bean

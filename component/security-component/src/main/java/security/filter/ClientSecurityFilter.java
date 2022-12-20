@@ -1,19 +1,12 @@
 package security.filter;
 
-import auth.domain.dao.AccountDao;
-import basecomponent.common.ApiResponse;
 import basecomponent.constant.AppConstant;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.GenericFilterBean;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 import security.util.JwtTokenProvider;
 
 import javax.servlet.FilterChain;
@@ -22,8 +15,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 
 @Log4j2

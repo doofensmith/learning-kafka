@@ -1,7 +1,7 @@
-package security.filter;
+package com.softlaboratory.auth.security;
 
-import auth.domain.dao.AccountDao;
 import basecomponent.constant.AppConstant;
+import com.softlaboratory.auth.domain.dao.AccountDao;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;

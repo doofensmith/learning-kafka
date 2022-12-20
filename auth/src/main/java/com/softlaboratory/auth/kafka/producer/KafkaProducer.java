@@ -1,7 +1,7 @@
 package com.softlaboratory.auth.kafka.producer;
 
-import auth.constant.AuthTopics;
 import auth.domain.request.RegisterRequest;
+import auth.kafka.topic.AuthTopic;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import customer.domain.dto.CustomerDto;
@@ -41,7 +41,7 @@ public class KafkaProducer {
         data.put("username", request.getUsername());
 
         String message = objectMapper.writeValueAsString(data);
-        kafkaTemplate.send(AuthTopics.AUTH_REGISTER_ACCOUNT, message);
+        kafkaTemplate.send(AuthTopic.AUTH_REGISTER_ACCOUNT, message);
     }
 
 }
