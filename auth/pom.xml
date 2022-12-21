@@ -165,14 +165,42 @@
 
 	<profiles>
 		<profile>
-			<id>development</id>
+			<id>devh2</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<build>
 				<resources>
 					<resource>
-						<directory>src/main/resources/profile/development</directory>
+						<directory>src/main/resources/profile/devh2</directory>
+						<filtering>true</filtering>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+		<profile>
+			<id>devmysql</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<resources>
+					<resource>
+						<directory>src/main/resources/profile/devmysql</directory>
+						<filtering>true</filtering>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+		<profile>
+			<id>devpostgresql</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<resources>
+					<resource>
+						<directory>src/main/resources/profile/devpostgresql</directory>
 						<filtering>true</filtering>
 					</resource>
 				</resources>

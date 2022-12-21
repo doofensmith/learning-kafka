@@ -12,5 +12,7 @@ public interface AuthService {
     ResponseEntity<Object> login(LoginRequest request);
     ResponseEntity<Object> register(RegisterRequest request) throws JsonProcessingException;
     ResponseEntity<Object> validateToken(String token);
+    //TODO: create service to activate user
+    //TODO: create service reset password
 
 }
