@@ -1,8 +1,7 @@
 package com.softlaboratory.customer.controller;
 
 import com.softlaboratory.customer.service.CustomerService;
-import customer.domain.dto.CustomerDto;
-import customer.domain.dto.ProfileDto;
+import customer.domain.request.NewProfileRequest;
 import customer.domain.request.UpdateCustomerRequest;
 import customer.domain.request.UpdateProfileRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +16,9 @@ public class CustomerController {
     private CustomerService customerService;
 
     @PostMapping(value = "/new-customer")
-    public ResponseEntity<Object> newCustomer(
-            @RequestParam(value = "profile_req") ProfileDto profileReq,
-            @RequestParam(value = "customer_req") CustomerDto customerReq) {
+    public ResponseEntity<Object> newCustomer(@RequestBody NewProfileRequest request) {
         try {
-            return customerService.newCustomer(profileReq, customerReq);
+            return customerService.newCustomer(request);
         }catch (Exception e) {
             throw e;
         }

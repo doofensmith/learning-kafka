@@ -10,6 +10,8 @@ import org.hibernate.annotations.Where;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,6 +31,9 @@ public class RoleDao extends BaseDaoSoftDelete implements GrantedAuthority {
 
     @Column(nullable = false, length = 10)
     private String role;
+
+    @OneToMany(mappedBy = "role")
+    private List<AccountRolesDao> roles = new ArrayList<>();
 
     @Override
     public String getAuthority() {

@@ -28,10 +28,17 @@ CREATE TABLE t_account_master (
 ALTER TABLE t_account_master ADD CONSTRAINT uc_t_account_master_username UNIQUE (username);
 
 CREATE TABLE bt_account_roles (
-  id_account BIGINT NOT NULL,
-   id_role BIGINT NOT NULL
+  deleted_at TIMESTAMP WITHOUT TIME ZONE,
+   is_deleted BOOLEAN,
+   created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+   created_by VARCHAR(50) NOT NULL,
+   updated_at TIMESTAMP WITHOUT TIME ZONE,
+   updated_by VARCHAR(50),
+   id_account BIGINT NOT NULL,
+   id_role BIGINT NOT NULL,
+   CONSTRAINT pk_bt_account_roles PRIMARY KEY (id_account, id_role)
 );
 
-ALTER TABLE bt_account_roles ADD CONSTRAINT fk_btaccrol_on_account_dao FOREIGN KEY (id_account) REFERENCES t_account_master (id);
+ALTER TABLE bt_account_roles ADD CONSTRAINT FK_BT_ACCOUNT_ROLES_ON_ID_ACCOUNT FOREIGN KEY (id_account) REFERENCES t_account_master (id);
 
-ALTER TABLE bt_account_roles ADD CONSTRAINT fk_btaccrol_on_role_dao FOREIGN KEY (id_role) REFERENCES t_role (id);
+ALTER TABLE bt_account_roles ADD CONSTRAINT FK_BT_ACCOUNT_ROLES_ON_ID_ROLE FOREIGN KEY (id_role) REFERENCES t_role (id);

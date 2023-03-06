@@ -40,13 +40,14 @@ public class JwtTokenProvider implements Serializable {
         key = new SecretKeySpec(keyBytes, 0, keyBytes.length, SignatureAlgorithm.HS256.getJcaName());
     }
 
-    public String generateToken(Authentication authentication) {
+    public String generateToken(Long id, Authentication authentication) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
         return Jwts.builder()
                 .setSubject(authentication.getName())
+                .claim("id", id)
                 .claim(authKey, authorities)
                 .signWith(key)
                 .setIssuedAt(new Date())

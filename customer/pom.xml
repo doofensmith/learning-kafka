@@ -15,8 +15,19 @@
 	<description>Learning Kafka</description>
 	<properties>
 		<java.version>11</java.version>
+		<spring-cloud.version>2021.0.5</spring-cloud.version>
 	</properties>
 	<dependencies>
+		<!--		SPRING CLOUD-->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
+
 		<!--		SPRING BASE-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -150,6 +161,18 @@
 		</dependency>
 	</dependencies>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -169,7 +192,21 @@
 
 	<profiles>
 		<profile>
-			<id>development</id>
+			<id>devh2</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<resources>
+					<resource>
+						<filtering>true</filtering>
+						<directory>src/main/resources/profile/devh2</directory>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+		<profile>
+			<id>devpostgresql</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
@@ -177,7 +214,7 @@
 				<resources>
 					<resource>
 						<filtering>true</filtering>
-						<directory>src/main/resources/profile/development</directory>
+						<directory>src/main/resources/profile/devpostgresql</directory>
 					</resource>
 				</resources>
 			</build>

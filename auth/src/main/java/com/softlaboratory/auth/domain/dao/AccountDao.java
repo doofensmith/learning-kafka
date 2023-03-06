@@ -8,13 +8,13 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -44,17 +44,16 @@ public class AccountDao extends BaseDaoSoftDelete implements UserDetails {
     @Column(name = "login_attemp", length = 1, columnDefinition = "smallint default 0")
     private Integer loginAttemp = 0;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "bt_account_roles",
-            joinColumns = @JoinColumn(name = "id_account"),
-            inverseJoinColumns = @JoinColumn(name = "id_role")
-    )
-    private List<RoleDao> roles = new ArrayList<>();
+    @OneToMany(mappedBy = "account")
+    private List<AccountRolesDao> account = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream().collect(Collectors.toList());
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        account.stream().forEach(accountRolesDao -> {
+            authorities.add(new SimpleGrantedAuthority(accountRolesDao.getRole().getAuthority()));
+        });
+        return authorities;
     }
 
     @Override

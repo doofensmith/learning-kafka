@@ -1,15 +1,15 @@
 package com.softlaboratory.customer.service.impl;
 
 import basecomponent.utility.ResponseUtil;
+import com.softlaboratory.customer.domain.dao.CustomerDao;
+import com.softlaboratory.customer.domain.dao.ProfileDao;
+import com.softlaboratory.customer.repository.CustomerRepository;
+import com.softlaboratory.customer.repository.ProfileRepository;
 import com.softlaboratory.customer.service.CustomerService;
-import customer.domain.dao.CustomerDao;
-import customer.domain.dao.ProfileDao;
 import customer.domain.dto.CustomerDto;
-import customer.domain.dto.ProfileDto;
+import customer.domain.request.NewProfileRequest;
 import customer.domain.request.UpdateCustomerRequest;
 import customer.domain.request.UpdateProfileRequest;
-import customer.repository.CustomerRepository;
-import customer.repository.ProfileRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -54,18 +54,17 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public ResponseEntity<Object> newCustomer(ProfileDto profileReq, CustomerDto customerReq) {
+    public ResponseEntity<Object> newCustomer(NewProfileRequest requestBody) {
         log.info("Starting new customer service.");
-        log.debug("New profile request : {}", profileReq);
-        log.debug("New customer request : {}", customerReq);
+        log.debug("New profile request : {}", requestBody);
 
         log.debug("Prepare new profile data.");
         ProfileDao profileDao = ProfileDao.builder()
-                .fullname(profileReq.getFullname())
-                .profilePic(profileReq.getProfilePic())
-                .email(profileReq.getEmail())
-                .phoneNumber(profileReq.getPhoneNumber())
-                .idAccount(profileReq.getIdAccount())
+                .fullname(requestBody.getFullname())
+                .profilePic(requestBody.getProfilePic())
+                .email(requestBody.getEmail())
+                .phoneNumber(requestBody.getPhoneNumber())
+                .idAccount(requestBody.getIdAccount())
                 .build();
 
         log.debug("Save new profile with repository.");
@@ -73,9 +72,9 @@ public class CustomerServiceImpl implements CustomerService {
 
         log.debug("Prepare new customer data.");
         CustomerDao customerDao = CustomerDao.builder()
-                .balance(customerReq.getBalance())
-                .point(customerReq.getPoint())
-                .idAccount(customerReq.getIdAccount())
+                .balance(requestBody.getBalance())
+                .point(requestBody.getPoint())
+                .idAccount(requestBody.getIdAccount())
                 .build();
 
         log.debug("Save new customer with repository.");

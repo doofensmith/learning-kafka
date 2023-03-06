@@ -5,13 +5,17 @@ import auth.domain.request.RegisterRequest;
 import auth.domain.response.LoginResponse;
 import basecomponent.utility.ResponseUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.softlaboratory.auth.client.CustomerClient;
 import com.softlaboratory.auth.domain.dao.AccountDao;
+import com.softlaboratory.auth.domain.dao.AccountRolesDao;
+import com.softlaboratory.auth.domain.dao.AccountRolesKey;
 import com.softlaboratory.auth.domain.dao.RoleDao;
 import com.softlaboratory.auth.domain.enums.RoleEnum;
-import com.softlaboratory.auth.kafka.producer.KafkaProducer;
 import com.softlaboratory.auth.repository.AccountRepository;
+import com.softlaboratory.auth.repository.AccountRolesRepository;
 import com.softlaboratory.auth.repository.RoleRepository;
 import com.softlaboratory.auth.service.AuthService;
+import customer.domain.request.NewProfileRequest;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +30,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import security.util.JwtTokenProvider;
 
-import java.util.List;
 import java.util.Optional;
 
 @Log4j2
@@ -40,6 +43,12 @@ public class AuthServiceImpl implements AuthService {
     private RoleRepository roleRepository;
 
     @Autowired
+    private AccountRolesRepository accountRolesRepository;
+
+    @Autowired
+    private CustomerClient customerClient;
+
+    @Autowired
     private JwtTokenProvider tokenProvider;
 
     @Autowired
@@ -47,9 +56,6 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private KafkaProducer kafkaProducer;
 
     @Override
     public ResponseEntity<Object> login(LoginRequest request) {
@@ -68,7 +74,7 @@ public class AuthServiceImpl implements AuthService {
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = tokenProvider.generateToken(authentication);
+        String jwt = tokenProvider.generateToken(account.get().getId(), authentication);
 
         LoginResponse loginResponse = LoginResponse.builder()
                 .token(jwt)
@@ -90,18 +96,43 @@ public class AuthServiceImpl implements AuthService {
             AccountDao account = new AccountDao();
             account.setUsername(request.getUsername());
             account.setPassword(passwordEncoder.encode(request.getPassword()));
-            account.setRoles(List.of(role));
+
 
             log.debug("Save new account to repository.");
             account = accountRepository.save(account);
 
             log.debug("New account id : {}", account.getId());
 
-            log.debug("Send message to broker.");
-            kafkaProducer.publishRegisterResponse(account.getId(), request);
+            log.debug("Set default role to new account.");
+            AccountRolesDao accountRolesDao = new AccountRolesDao();
+            accountRolesDao.setId(AccountRolesKey.builder()
+                    .idAccount(account.getId())
+                    .idRole(role.getId())
+                    .build());
+            accountRolesRepository.save(accountRolesDao);
 
-        }catch (Exception e) {
+            try {
+                log.debug("Send account data to create profile to customer service.");
+                NewProfileRequest newProfileRequest = NewProfileRequest.builder()
+                        .idAccount(account.getId())
+                        .fullname(request.getFullname())
+                        .profilePic("-")
+                        .balance(0D)
+                        .point(0D)
+                        .build();
+                customerClient.newCustomer(newProfileRequest);
+
+            } catch (Exception e) {
+                log.info("Register failed.");
+
+                log.debug("Deleting account.");
+                accountRepository.delete(account);
+                throw e;
+            }
+
+        } catch (Exception e) {
             log.info("Register failed.");
+
             throw e;
         }
 
@@ -121,7 +152,7 @@ public class AuthServiceImpl implements AuthService {
 
             log.info("Token invalid.");
             throw new BadCredentialsException("Invalid token!");
-        }else {
+        } else {
             String username = tokenProvider.getUsername(token);
             AccountDao accountDao = accountRepository.getDistinctTopByUsername(username);
             log.debug("Account dao : {}", accountDao);
